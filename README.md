@@ -24,7 +24,7 @@
 
 ## Project Description
  > Your project description should summarize the project you are proposing. Be sure to include:
- > * Why is it important or interesting to you?
+ > * Why is it important or interesting to you? Chess is a game known by all cultures and is primarily popular due to it strucutre and complexity. Our team enjoys a game of effective decision-making and the challenges of protecting the king. The features we will be creating include: saving and loading of incomplete games, allowing players to undo moves, and playing with a computer player.
  > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
  >   * [toolname](link) - Short description
  > * What will be the input/output of your project? What are the features that the project provides?
