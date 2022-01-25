@@ -28,7 +28,7 @@
  > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
  >   * [toolname](link) - We have yet to decide on the tools we plan to use. We will update this as we progress into the developmental phase.
  >   Langauges: C++, SQL
- > * What will be the input/output of your project? What are the features that the project provides?
+ > * What will be the input/output of your project? What are the features that the project provides? Console input, console output.
  > 
  > This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted. 
  > 
