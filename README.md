@@ -31,7 +31,7 @@
  >   We have yet to decide on the tools we plan to use. We will update this as we progress into the developmental phase.
  >   Langauges: C++, SQL
  > * What will be the input/output of your project? What are the features that the project provides? Console input, console output. The features of our product include: saving and reloading games, allowing players to undo moves, and playing with a computer.
- > 
+ >  Chess games will be entirely playable through console where user input is taken to move the pieces. After each valid move, the interface (chess board) gets updated showing the pieces in their new position.
  > This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted. 
  > 
  > You also need to set up an empty project board by choosing the  “Automated kanban with review” option on Github. You should also have a Backlog and In testing columns added.
