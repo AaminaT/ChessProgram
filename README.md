@@ -28,9 +28,9 @@
  > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
  >   * \<[PostgreSQL](https://www.postgresql.org/docs/)\> -
  >   * \<[CPP Check](https://cppcheck.sourceforge.io/)\> - 
- >   We have yet to decide on the tools we plan to use. We will update this as we progress into the developmental phase.
+ > * We have yet to decide on the tools we plan to use. We will update this as we progress into the developmental phase.
  >   Langauges: C++, SQL
- > * What will be the input/output of your project? What are the features that the project provides? Console input, console output. The features of our product include: saving and reloading games, allowing players to undo moves, and playing with a computer.
+ > * What will be the input/output of your project? What are the features that the project provides? Chess games will be entirely playable through console where user input is taken to move the pieces. After each valid move, the interface (chess board) gets updated showing the pieces in their new position. The features of our product include: saving and reloading games, allowing players to undo moves, and playing with a computer.
  > 
  > This description should be in enough detail that the TA/instructor can determine the complexity of the project and if it is sufficient for the team members to complete in the time allotted. 
  > 
