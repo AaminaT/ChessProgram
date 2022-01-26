@@ -24,9 +24,10 @@
 
 ## Project Description
  > Your project description should summarize the project you are proposing. Be sure to include:
- > Chess is a game known by all cultures and is primarily popular due to it strucutre and complexity. Our team enjoys a game of effective decision-making and the challenges of protecting the king. The features we will be creating include: saving and loading of incomplete games, allowing players to undo moves, and playing with a computer player.
+ > Chess is a game known by all cultures and is primarily popular due to it strucutre and complexity. Our team enjoys a game of effective decision-making and the challenges of protecting the king. Because chess teaches the necessity of making strong moves, planing ahead, and changing perspectives to view the opponet's plan, we seek to create our own chess board game. The features we will be creating include: saving and loading of incomplete games, allowing players to undo moves, and playing with a computer player. Because we might be creating the computer player algorithm from scratch, it will be a naive algorithm.
  > * What languages/tools/technologies do you plan to use? (This list may change over the course of the project)
- >   * [toolname](link) - We have yet to decide on the tools we plan to use. We will update this as we progress into the developmental phase.
+ >   * [toolname](link) - CPP Check
+ >   We have yet to decide on the tools we plan to use. We will update this as we progress into the developmental phase.
  >   Langauges: C++, SQL
  > * What will be the input/output of your project? What are the features that the project provides? Console input, console output.
  > 
