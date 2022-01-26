@@ -30,7 +30,7 @@
  >   * \<[PostgreSQL](https://www.postgresql.org/docs/)\> - We specifically chose to use Postgresql because it is an open-source SQL software and it has tools that can help save the games changes, (e.g. after undoing the move, when the game is reloaded, it would show this change).
  >   * \<[CPP Check](https://cppcheck.sourceforge.io/)\> - Cppcheck detect bugs and focuses on detecting undefined behaviour and dangerous coding constructs. it checks variable initialization, bounds, memory, and bounds leak, exception safety checking to make sure the memory is allocated and deallocated properly.
  >   * We have yet to decide on the tools we plan to use. We will update this as we progress into the developmental phase.
- >   Langauges: C++, SQL
+ >   * Langauges: C++, SQL
  > * What will be the input/output of your project? What are the features that the project provides? 
  >   * Chess games will be entirely playable through console where user input is taken to move the pieces. After each valid move, the interface (chess board) gets updated showing the pieces in their new position. Features we will be adding include the saving/loading of ongoing games, the undoing of moves, and capability to play against a computer player.
  > 
