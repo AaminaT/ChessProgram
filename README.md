@@ -10,17 +10,7 @@
 
 Chess is a game known by all cultures and is primarily popular due to its structure and complexity. Our team enjoys a game of effective decision-making and the challenges of protecting the king. Because chess teaches the necessity of making strong moves, planning ahead, and changing perspectives to view an opponent's plan, we seek to create our own chess board game. Features we'll be adding include the saving/loading of ongoing games, the option to undo moves, and capability to play against a computer player. Tools that we'll be using include [PostgreSQL](https://www.postgresql.org/docs/) and [CPP Check](https://cppcheck.sourceforge.io/). We specifically chose PostgreSQL because it is an open-source SQL software and it has tools that can help save games changes (e.g., after undoing a move and saving the game, when the game is reloaded, the state of the game would contain this change). CPP Check detects bugs and focuses on detecting undefined behaviour and dangerous coding constructs. It checks variable initialization, bounds, memory, and bounds leak. It also has exception safety checking to make sure the memory is allocated and deallocated properly. When the program is launched, there is a menu prompt with options to either start a new game against a computer, continue a previously saved game, or quit the program (subject to change). Chess games will be entirely playable through console where user input is taken to move the pieces (e.g, entering 'Re7' moves the Rook to square e7 and entering 'Rxe7' will have the Rook capture the piece on e7). After each valid move, the interface (chess board) is visually updated with pieces in their new position and any captured pieces being removed. Once a game is finished, the user will have the option to begin a new game.
 
- > ## Phase II
- > In addition to completing the "Class Diagram" section below, you will need to:
- > * Create an "Epic" (note) for each feature and each design pattern and assign them to the appropriate team member. Place these in the `Backlog` column
- > * Complete your first *sprint planning* meeting to plan out the next 7 days of work.
- >   * Create smaller actionable development tasks as issues and assign them to team members. Place these in the `TODO` column.
- >   * These cards should represent roughly 7 days worth of development time for your team, taking you until your first meeting with the TA
- > * Schedule two check-ins using Calendly. You need to pick both time slots during your lab on week 8. Your entire team must be present for both check-ins.
- >   * The first check-in needs to be scheduled with your lab TA. During that meeting, you will discuss your project design/class diagram from phase II.
- >   * The second check-in should be scheduled with a reader. During that meeting you will discuss:
- >     * The tasks you are planning for the first sprint
- >     * How work will be divided between the team members
+![UML Class Diagram](https://ibb.co/LgdgbR8)
 
 ## Class Diagram
  > Include a **class diagram(s)** for your project and a **description** of the diagram(s). Your class diagram(s) should include all the main classes you plan for the project. This should be in sufficient detail that another group could pick up the project this point and successfully complete it. Use proper UML notation (as discussed in the course slides).
