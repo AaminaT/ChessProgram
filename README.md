@@ -14,6 +14,8 @@ Chess is a game known by all cultures and is primarily popular due to its struct
 
 ![UML Class Diagram](https://i.ibb.co/n1M1Zmb/CS100-Project-UML.png)
 
+Each class pertaining to a chess piece (**King**, **Queen**, **Rook**, **Knight**, **Bishop**, **Pawn**) inherits the **Piece** class containing isMoveValid(Move, Board*), getValue(), and getDirections(). The **Piece** class contains functions to either display available moves for a chosen piece or check if the moves entered by the user are legal. The history of moves played is handled by the **Game** class above and is achieved through keeping track of a stack of **Board** pointers. Each Board pointer has access to the members: board, numPieces, depth, and value. These members are accessed after every move to retrieve the current status of the board. On the other hand, histories of entire games are stored in **SQL_Database** whose functions include save(Game*), load(string), and loadAll(). During a game, statuses to update the board, undo a move, or make another move are directed to the **message** class and is addressed through info strings. After every move, **message**, **Game**, and **BoardUI** all make calls to **Observer** who then updates **Listener**, an event handling class that notifies any **Observers** of state changes.
+
  > Include a **class diagram(s)** for your project and a **description** of the diagram(s). Your class diagram(s) should include all the main classes you plan for the project. This should be in sufficient detail that another group could pick up the project this point and successfully complete it. Use proper UML notation (as discussed in the course slides).
  
  > ## Phase III
