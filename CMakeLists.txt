@@ -6,12 +6,12 @@ ADD_SUBDIRECTORY(googletest)
 
 ADD_EXECUTABLE (
     chess
-    main.cpp
+    src/main.cpp
 )
 
 ADD_EXECUTABLE (
     test
-    test.cpp
+    src/Tests/test.cpp
 )
 
 TARGET_LINK_LIBRARIES(test gtest)
