@@ -19,9 +19,9 @@ class Listener {
         void addObserver(Observer* obs) { observers->push_back(obs); }
 
         bool removeObserver(Observer* obs) {
-            for(auto o: *observers)
-                if(o == obs) {
-                    observers->erase(o);
+            for(auto i = observers->begin(); i != observers->end(); i++)
+                if(*i == obs) {
+                    observers->erase(i);
                     break;
                 {
         }
