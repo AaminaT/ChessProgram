@@ -28,6 +28,9 @@ During a game, statuses to update the board, undo a move, or make another move a
 **message**, **Game**, and **BoardUI** all make calls to **Observer** who then updates **Listener**, an event handling class that notifies any **Observers** of state changes.
  
  > ## Phase III
+
+For this project, we decided to go with the Observer Pattern, which sets up a notification system in which a subject class (listener) notifies other dependent classes (observers) upon a change of its state. By implementing the observer pattern, we were able to separate our game's model from the user interface for our game. In doing so, we abstracted the player from the game, allowing us to add new player types (as necessary) that will interact with the model solely through the observer pattern. This not only improved the extensibility of the program, but also circumvented the need to modify the game model for each new player type added, thus abiding by the open-closed principle. Specifically, we plan on introducing one (or more) computer player types (naïve, minimax), so the observer pattern will reduce the need for unnecessary code to implement the AI with the model.
+
  > You will need to schedule a check-in for the second scrum meeting with a reader (using Calendly). Your entire team must be present. This meeting will occur on week 8 but NOT during lab time.
  > * Before the meeting you should perform a sprint plan like you did in Phase II.
  > * You should also update this README file by adding the following:
