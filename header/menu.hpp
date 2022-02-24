@@ -2,6 +2,7 @@
 #define __MENU_HPP__
 
 #include <string>
+#include <iostream>
 
 class Menu
 {

@@ -2,17 +2,17 @@
 
 void Menu::display()
 {
-	cout << "CHESS" << endl;
-	cout << "------------------------" << endl;
-	cout << "1. Play New Game\n2. Load Game\n3. Quit" << endl;
-	cout << "Enter a number (1 - 3) to select option: ";
+	std::cout << "CHESS" << std::endl;
+	std::cout << "------------------------" << std::endl;
+	std::cout << "1. Play New Game\n2. Load Game\n3. Quit" << std::endl;
+	std::cout << "Enter a number (1 - 3) to select option: ";
 
 	int choice = 0;
-	cin >> choice;
+	std::cin >> choice;
 
 	while(!(choice <= 3 && choice > 0)){
-		cout << "Invalid input, please try again: ";
-		cin >> choice;
+		std::cout << "Invalid input, please try again: ";
+		std::cin >> choice;
 	}
 
 	switch(choice){
@@ -23,7 +23,7 @@ void Menu::display()
 			// s.loadPreviousGame()
 			break;
 		default:
-			cout << "Quitting Chess" << endl;
+			std::cout << "Quitting Chess" << std::endl;
 			break;
 	}
 }
