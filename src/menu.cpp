@@ -24,6 +24,5 @@ void Menu::display()
 			break;
 		default:
 			std::cout << "Quitting Chess" << std::endl;
-			break;
 	}
 }
