@@ -6,7 +6,7 @@
 class Message {
     public:
         virtual ~Message() {}
-        virtual string info() = 0;
+        virtual std::string info() = 0;
 };
 
 #endif //__MESSAGE_HPP__

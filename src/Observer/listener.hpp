@@ -5,16 +5,19 @@
 #include <vector>
 
 class Listener {
-    private:
-        vector<Observer*>* observers;
-  
     protected:
-        virtual void notifyObservers() = 0;
+        std::vector<Observer*>* observers;
 
-    public:
-        Listener(): observers{new vector<Observer*>()} {}
+    public:        
+        Listener(): observers{new std::vector<Observer*>()} {}
 
-        ~Listener() { delete observers; }
+        virtual ~Listener() { delete observers; }
+
+        virtual void notifyObservers(Message* msg, Observer* src) {
+            for(auto obs: *observers)
+                if(obs != src)
+                    obs->update(msg, src);
+        }
 
         void addObserver(Observer* obs) { observers->push_back(obs); }
 
@@ -25,7 +28,7 @@ class Listener {
                     observers->erase(i);
                     found = true;
                     break;
-                {
+                }
             return found;
         }
 };

@@ -7,6 +7,6 @@ class Observer {
     public:
         virtual ~Observer() {}
 	virtual void update(Message* message, Observer* src) = 0;
-}
+};
 
 #endif // __OBSERVER_HPP__
