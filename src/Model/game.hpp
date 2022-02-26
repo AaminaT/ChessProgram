@@ -8,27 +8,35 @@
 #include <unordered_map>
 
 class Game: public Observer, public Listener {
-	private:
+    private:
 	int id;
         int turn;
         std::stack<Board*> history;
         std::unordered_map<char, Piece*> pieces;
 
-	public:
+    public:
 	Game(Observer* player1, Observer* player2): Observer(), Listener() {
             this->addObserver(player1);
             this->addObserver(player2);
         }
         
-        ~Game() {}
-
-        virtual void update(Message* msg, Observer* src) {
-            // msg instance of StartGame
-            // ...
+        ~Game() {
+            for(Piece* p: pieces)
+                delete p;
+            for(Board* b: history)
+                delete b;
         }
 
-        virtual void notifyObservers(Message* msg, Observer* src = nullptr) {
-            observers->at(turn%2)->update(msg, this);
+        virtual void update(Message* msg, Observer* src) {
+            // msg instance of (message implementation)
+            // ...
+            // handle message
+            // ...
+            // delete message
+        }
+
+        virtual void notifyObservers(Message* msg, Observer* src) {
+            observers->at(turn%2)->update(msg, src);
         }
 };
 
