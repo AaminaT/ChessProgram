@@ -1,91 +1,107 @@
 #ifndef __BOARD_HPP__
 #define __BOARD_HPP__
 
+#include <iostream>
+
 class Board {
-    private:
-        char* board;
-        int value;
-        int depth;
+private:
+    char* board;
+    int value;
+    int depth;
 
-    public:
-        class piece_info {
-            private:
-                int row;
-                int col;
-                char piece;
-                int side;
+public:
+    class piece_info;
+    class board_iterator;
+    
+    Board(): board{new char[65]}, value{0}, depth{0} {
+        std::string order = "RNBKQBNRPPPPPPPP";
+        for(int i = 0; i < 64; ++i) {
+            board[i] = (1 < i/8 && i/8 < 6? ' ': (i/16 == 0? order[i]: order[15 - i%16] + 32));
+        board[64] = '\0';
+    }
 
-            public:
-                piece_info() {}
-                piece_info(piece_info&& other) {}
+    Board(Board& other): board{new char*[65]}, value{other.value}, depth{other.depth} {
+        for(int i = 0; i < 65; ++i)
+            this->board[i] = other.board[i];
+    }
 
-                int row() {return row;}
-                int col() {return col;}
-                char piece() {return piece;}
-                int side() {return side;}
+    Board(Board&& other): board{other.board}, value{other.value}, depth{other.depth} { other.board = nullptr; }
+    ~Board() { delete[] board; }
+    
 
-                void operator=(piece_info&& other) {}
+    char at(int x) const { return board[x]; }
+    char at(int row, int col) const { return at(row*8 + col); }
+    piece_info at(coordinate& pos) const { return piece_info(new coordinate(pos), at(pos), side(pos)); }
+    
+    void move(coordinate& origin, coordinate& destination, int piece_value) {
+        board[pos.row*8 + pos.col] = 
+        depth++;
+        value += piece_value*side(row,col);
+    }
+    
+    int side(int x) const { return at(x) == ' '? 0: at(x) >= 'a'? 1: -1; }
+    int side(int row, int col) const { return side(row*8 + col); }
+    int get_value() const { return value + (value < 0? 1: -1)*depth; }
+
+    void print(std::ostream& out) {
+        for(int i = 0; i < 64; i++) {    
+            out << board[i];
+            if(i%8 = 7)
+                out << std::endl;
         }
+    }
+    
+    board_iterator begin() { return board_iterator(); }
+    board_iterator end() { return board_iterator(65); }
 
-        Board(): board{new char*[65]} {
-            std::string order = "RNBKQBNRPPPPPPPP";
-            for(int i = 0; i < 64; ++i) {
-                board[i] = (1 < i/8 && i/8 < 6? ' ': (i/16 == 0? order[i]: order[15 - i%16] + 32))
-            board[64] = '\0';
-        }
-        
-        Board(Board& other): board{new char*[65]} {
-            for(int i = 0; i < 65; ++i)
-                this->board[i] = other.board[i];
-        }
+    class piece_info {
+        private:
+            coordinate* pos;
+            char piece;
+            int side;
 
-        piece_info&& at(int row, int col) const {}
+        public:
+            piece_info(coordinate* pos, char piece, int side): pos{pos}, piece{piece}, side{side} {}
+            piece_info(piece_info&& other): pos{other.pos}, piece{other.piece}, side{other.side} {other.pos == nullptr;}
+            ~piece_info() {delete pos;}
 
-        char at(int row, int col) const {return board[row*8 + col];}
+            coordinate pos() { return *pos; }
+            char piece() { return piece; }
+            int side() { return side; }
+            bool hasPiece() { return side != 0; }
+            bool isWhite() { return side == 1; }
+    };
 
-        int side(int row, int col) const {
-            int _side;
-            char piece = at(row, col);
+    class board_iterator {
+        private:
+            int pos;
 
-            if(piece == ' ')
-                _side = 0;
-            else
-                _side = 'a' <= piece && piece <= 'z'? 1: 2;
+        public:
+            board_iterator(int x = 0) pos{x} {}
 
-            return _side;
-        }
+            board_iterator& operator++() {
+                if(board[pos] != '\0')
+                    ++pos;
+                while(board[pos] == ' ')
+                    ++pos;
+            }
 
-        void set(int row, int col, char val) {
-            if(is_white(row,col))
-        }
+            board_iterator operator++() {
+                board_iterator temp = *this;
+                ++(*this);
+                return temp;
+            }
 
-        int get_value()
-
-        ~Board() {delete[] board;}
-
-        board_iterator&& begin() {}
-        board_iterator&& end() {}
-
-        class board_iterator {
-            private:
-                int pos;
-
-            public:
-                board_iterator(int x = 0) pos{x} {}
-                void operator++() {
-                    if(board[x] != '\0')
-                        ++x;
-                    while(board[x] == ' ')
-                        ++x;
-                }
-
-                char operator*() {}
-                int get_x() {}
-                int get_y() {}
-                int get_side() {}
-
-                bool operator==(const board_iterator& other) {return this->pos == other.pos;}
-        };
+            piece_info operator*() {
+                if(pos == 64)
+                    throw "can not dereference end iterator";
+                
+                return piece_info(new coordinate(pos/8, pos%8), at(pos), side(pos));
+            }
+            
+            bool operator==(const board_iterator& other) { return this->pos == other.pos; }
+            bool operator!=(const board_iterator& other) { return !(this == other); }
+    };
 };
 
 #endif
