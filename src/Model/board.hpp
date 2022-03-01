@@ -2,6 +2,7 @@
 #define __BOARD_HPP__
 
 #include <iostream>
+#include "coordinate.hpp"
 
 class Board {
 private:
@@ -15,12 +16,12 @@ public:
     
     Board(): board{new char[65]}, value{0}, depth{0} {
         std::string order = "RNBKQBNRPPPPPPPP";
-        for(int i = 0; i < 64; ++i) {
+        for(int i = 0; i < 64; ++i)
             board[i] = (1 < i/8 && i/8 < 6? ' ': (i/16 == 0? order[i]: order[15 - i%16] + 32));
         board[64] = '\0';
     }
 
-    Board(Board& other): board{new char*[65]}, value{other.value}, depth{other.depth} {
+    Board(Board& other): board{new char[65]}, value{other.value}, depth{other.depth} {
         for(int i = 0; i < 65; ++i)
             this->board[i] = other.board[i];
     }
@@ -31,12 +32,12 @@ public:
 
     char at(int x) const { return board[x]; }
     char at(int row, int col) const { return at(row*8 + col); }
-    piece_info at(coordinate& pos) const { return piece_info(new coordinate(pos), at(pos), side(pos)); }
-    
+    piece_info at(coordinate& pos) const { return piece_info(new coordinate(pos), at(pos.row, pos.col), side(pos.row, pos.col)); }
+
     void move(coordinate& origin, coordinate& destination, int piece_value) {
-        board[pos.row*8 + pos.col] = 
+        board[destination.row*8 + destination.col] = at(origin.row, origin.col);
         depth++;
-        value += piece_value*side(row,col);
+        value += piece_value*side(origin.row, origin.col);
     }
     
     int side(int x) const { return at(x) == ' '? 0: at(x) >= 'a'? 1: -1; }
@@ -46,13 +47,13 @@ public:
     void print(std::ostream& out) {
         for(int i = 0; i < 64; i++) {    
             out << board[i];
-            if(i%8 = 7)
+            if(i%8 == 7)
                 out << std::endl;
         }
     }
     
-    board_iterator begin() { return board_iterator(); }
-    board_iterator end() { return board_iterator(65); }
+    board_iterator begin() { return board_iterator(this); }
+    board_iterator end() { return board_iterator(this, 65); }
 
     class piece_info {
         private:
@@ -74,19 +75,20 @@ public:
 
     class board_iterator {
         private:
+            Board* board;
             int pos;
 
         public:
-            board_iterator(int x = 0) pos{x} {}
+            board_iterator(Board* b, int x = 0): board{b}, pos{x} {}
 
             board_iterator& operator++() {
-                if(board[pos] != '\0')
+                if(board->at(pos) != '\0')
                     ++pos;
-                while(board[pos] == ' ')
+                while(board->at(pos) == ' ')
                     ++pos;
             }
 
-            board_iterator operator++() {
+            board_iterator operator++(int) {
                 board_iterator temp = *this;
                 ++(*this);
                 return temp;
@@ -96,12 +98,14 @@ public:
                 if(pos == 64)
                     throw "can not dereference end iterator";
                 
-                return piece_info(new coordinate(pos/8, pos%8), at(pos), side(pos));
+                return piece_info(new coordinate(pos/8, pos%8), board->at(pos), board->side(pos));
             }
             
             bool operator==(const board_iterator& other) { return this->pos == other.pos; }
-            bool operator!=(const board_iterator& other) { return !(this == other); }
+            bool operator!=(const board_iterator& other) { return !(*this == other); }
     };
+
+    
 };
 
 #endif
