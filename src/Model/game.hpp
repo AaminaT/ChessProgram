@@ -20,12 +20,12 @@ class Game: public Observer, public Listener {
             this->addObserver(player2);
         }
         
-        ~Game() {
+        /*~Game() {
             for(Piece* p: pieces)
                 delete p;
             for(Board* b: history)
                 delete b;
-        }
+        }*/
 
         virtual void update(Message* msg, Observer* src) {
             // msg instance of (message implementation)

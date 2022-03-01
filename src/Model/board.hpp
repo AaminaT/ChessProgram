@@ -53,7 +53,7 @@ public:
     }
     
     board_iterator begin() { return board_iterator(this); }
-    board_iterator end() { return board_iterator(this, 65); }
+    board_iterator end() { return board_iterator(this, 64); }
 
     class piece_info {
         private:
