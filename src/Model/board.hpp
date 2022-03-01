@@ -57,20 +57,20 @@ public:
 
     class piece_info {
         private:
-            coordinate* pos;
-            char piece;
-            int side;
+            coordinate* _pos;
+            char _piece;
+            int _side;
 
         public:
-            piece_info(coordinate* pos, char piece, int side): pos{pos}, piece{piece}, side{side} {}
-            piece_info(piece_info&& other): pos{other.pos}, piece{other.piece}, side{other.side} {other.pos == nullptr;}
-            ~piece_info() {delete pos;}
+            piece_info(coordinate* pos, char piece, int side): _pos{pos}, _piece{piece}, _side{side} {}
+            piece_info(piece_info&& other): _pos{other._pos}, _piece{other._piece}, _side{other._side} {other._pos == nullptr;}
+            ~piece_info() {delete _pos;}
 
-            coordinate pos() { return *pos; }
-            char piece() { return piece; }
-            int side() { return side; }
-            bool hasPiece() { return side != 0; }
-            bool isWhite() { return side == 1; }
+            coordinate pos() { return *_pos; }
+            char piece() { return _piece; }
+            int side() { return _side; }
+            bool hasPiece() { return _side != 0; }
+            bool isWhite() { return _side == 1; }
     };
 
     class board_iterator {
