@@ -5,7 +5,7 @@
 int main(int argc, char* argv[]) {
      Board board = Board();
      board.print(std::cout);
-     Board::board_iterator it = board.begin();
+     Board::piece_iterator it = board.begin();
      for(it; it != board.end(); it++)
          std::cout << "piece: " << (*it).piece() << " side: " << (*it).side() << std::endl;
 

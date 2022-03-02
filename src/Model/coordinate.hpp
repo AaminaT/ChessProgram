@@ -24,6 +24,18 @@ struct coordinate {
         return row*other.row + col*other.col;
     }
 
+    coordinate operator*(int& scalar) {
+        row *= scalar;
+        col *= scalar;
+        return *this;
+    }
+
+    coordinate& operator=(coordinate&& other) {
+        row = other.row;
+        col = other.col;
+        return *this;
+    }
+
     bool operator==(coordinate& other) {
         return row == other.row && col == other.col;
     }
