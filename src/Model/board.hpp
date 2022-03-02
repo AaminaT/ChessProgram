@@ -63,8 +63,8 @@ public:
     
     piece_iterator begin() { return piece_iterator(this); }
     piece_iterator end() { return piece_iterator(this, 64); }
-    path_iterator begin(coordinate& start, coordinate& dir) {}
-    path_iterator end(coordinate& end, coordinate& dir) {}
+    path_iterator begin(coordinate& start, coordinate& dir) { return path_iterator(this, start, dir); }
+    path_iterator end(coordinate& end, coordinate& dir) { return ++path_iterator(this, end, dir); }
 
     class piece_info {
         private:
@@ -122,14 +122,15 @@ public:
         private:
             Board* board;
             coordinate* current;
-            coordinate* origin;
-            coordinate* dir;
+            coordinate& origin;
+            coordinate& dir;
 
         public:
-            path_iterator(Board* b, coordinate* o, coordinate* d): board{b}, current{new coordinate(*o)}, origin{o}, dir{d} {}
+            path_iterator(Board* b, coordinate& o, coordinate& d): board{b}, current{new coordinate(o)}, origin{o}, dir{d} {}
+            ~path_iterator() { delete current; }
 
             path_iterator& operator++() {
-                *current = *current + *dir;
+                *current = *current + dir;
                 return *this;
             }
 
