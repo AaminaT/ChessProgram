@@ -149,7 +149,7 @@ public:
             
             bool operator==(const path_iterator& other) { return this->current == other.current; }
             bool operator!=(const path_iterator& other) { return !(*this == other); }
-    }
+    };
 };
 
 #endif
