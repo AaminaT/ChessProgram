@@ -130,6 +130,7 @@ public:
             ~path_iterator() { delete current; }
 
             path_iterator& operator++() {
+                std::cout << "current: (" << current->row << "," << current->col << ") address: " << std::endl;
                 *current = *current + dir;
                 return *this;
             }

@@ -24,7 +24,7 @@ struct coordinate {
         return row*other.row + col*other.col;
     }
 
-    coordinate& operator*(int& scalar) {
+    coordinate& operator*(const int& scalar) {
         row *= scalar;
         col *= scalar;
         return *this;
