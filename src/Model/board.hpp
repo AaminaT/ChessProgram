@@ -2,6 +2,7 @@
 #define __BOARD_HPP__
 
 #include <iostream>
+#include <sstream>
 #include "coordinate.hpp"
 
 class Board {
@@ -16,7 +17,7 @@ public:
     class path_iterator;
     
     Board(): board{new char[65]}, value{0}, depth{0} {
-        std::string order = "RNBKQBNRPPPPPPPP";
+        std::string order = "RNBQKBNRPPPPPPPP";
         for(int i = 0; i < 64; ++i)
             board[i] = (1 < i/8 && i/8 < 6? ' ': (i/16 == 0? order[i]: order[15 - i%16] + 32));
         board[64] = '\0';
@@ -61,10 +62,10 @@ public:
         }
     }
     
-    piece_iterator begin() { return piece_iterator(this); }
-    piece_iterator end() { return piece_iterator(this, 64); }
-    path_iterator begin(coordinate& start, coordinate& dir) { return path_iterator(this, start, dir); }
-    path_iterator end(coordinate& end, coordinate& dir) { return ++path_iterator(this, end, dir); }
+    piece_iterator piece_begin() { return piece_iterator(this); }
+    piece_iterator piece_end() { return piece_iterator(this, 64); }
+    path_iterator path_begin(coordinate& origin, coordinate& destination, coordinate& direction) { return path_iterator(this, origin, destination, direction); }
+    path_iterator path_end() { return path_iterator(); }
 
     class piece_info {
         private:
@@ -121,17 +122,28 @@ public:
     class path_iterator {
         private:
             Board* board;
-            coordinate* current;
-            coordinate& origin;
-            coordinate& dir;
+            coordinate current;
+            coordinate begin;
+            coordinate end;
+            coordinate dir;
 
         public:
-            path_iterator(Board* b, coordinate& o, coordinate& d): board{b}, current{new coordinate(o)}, origin{o}, dir{d} {}
-            ~path_iterator() { delete current; }
+            path_iterator(): board{nullptr}, current{coordinate()}, begin{current}, end{current}, dir{current} {}
+
+            path_iterator(Board* b, const coordinate& orig, const coordinate& dest, const coordinate& dir): board{b}, current{coordinate(orig)}, begin{orig}, end{dest}, dir{dir} {
+                coordinate v = dest - orig;
+                if(!are_equivalent(v, dir)) {
+                    std::stringstream ss;
+                    ss << "can not iterate from (" << orig.row << ", " << orig.col << ") to ("
+                       << dest.row << ", " << dest.col << ") using the direction (" << dir.row
+                       << ", " << dir.col << ")\n";
+                    throw ss.str();
+                }
+            }
 
             path_iterator& operator++() {
-                std::cout << "current: (" << current->row << "," << current->col << ") address: " << std::endl;
-                *current = *current + dir;
+                if(current != coordinate())
+                    current = (current == end)? coordinate(): current + dir;
                 return *this;
             }
 
@@ -142,10 +154,10 @@ public:
             }
 
             piece_info operator*() {
-                if(current->row < 0 || current->row > 7 || current->col < 0 || current->col > 7)
+                if(current.row < 0 || current.row > 7 || current.col < 0 || current.col > 7)
                     throw "iterator out of bounds!";
                 
-                return board->at(*current);
+                return board->at(current);
             }
             
             bool operator==(const path_iterator& other) { return this->current == other.current; }
