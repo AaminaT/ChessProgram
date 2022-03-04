@@ -2,7 +2,10 @@
 #define __BOARD_HPP__
 
 #include <iostream>
+#include <sstream>
+#include <stdexcept>
 #include "coordinate.hpp"
+#include "../Messages/move.hpp"
 
 class Board {
 private:
@@ -16,7 +19,7 @@ public:
     class path_iterator;
     
     Board(): board{new char[65]}, value{0}, depth{0} {
-        std::string order = "RNBKQBNRPPPPPPPP";
+        std::string order = "RNBQKBNRPPPPPPPP";
         for(int i = 0; i < 64; ++i)
             board[i] = (1 < i/8 && i/8 < 6? ' ': (i/16 == 0? order[i]: order[15 - i%16] + 32));
         board[64] = '\0';
@@ -35,7 +38,7 @@ public:
     char at(int row, int col) const { return at(row*8 + col); }
     piece_info at(coordinate& pos) const { return piece_info(new coordinate(pos), at(pos.row, pos.col), side(pos.row, pos.col)); }
 
-    // 
+    // move: return a new board with a move applied to it
     Board* move(coordinate& origin, coordinate& destination, int piece_value) {
         Board* b = new Board(*this);
 
@@ -50,7 +53,7 @@ public:
     int side(int x) const { return at(x) == ' '? 0: at(x) >= 'a'? 1: -1; }
     int side(int row, int col) const { return side(row*8 + col); }
 
-    // get_value: 
+    // get_value: returns evaluation of the current board state
     int get_value() const { return value + (value < 0? 1: -1)*depth; }
 
     void print(std::ostream& out) {
@@ -60,12 +63,27 @@ public:
                 out << std::endl;
         }
     }
-    
-    piece_iterator begin() { return piece_iterator(this); }
-    piece_iterator end() { return piece_iterator(this, 64); }
-    path_iterator begin(coordinate& start, coordinate& dir) { return path_iterator(this, start, dir); }
-    path_iterator end(coordinate& end, coordinate& dir) { return ++path_iterator(this, end, dir); }
 
+    /*************************************************************************************************
+     *                                       ITERATORS
+     * -----------------------------------------------------------------------------------------------
+     * piece_iterator
+     *   - iterates through all of the active pieces on the board
+     * 
+     * path_iterator
+     *   - iterates through a path specified by the user
+     * 
+     *************************************************************************************************/   
+    piece_iterator piece_begin() { return piece_iterator(this); }
+    piece_iterator piece_end() { return piece_iterator(this, 64); }
+
+    path_iterator path_begin(Move& move) { return path_iterator(this, move.get_origin(), move.get_destination(), move.get_direction()); }
+    path_iterator path_begin(coordinate& origin, coordinate& destination, coordinate& direction) { return path_iterator(this, origin, destination, direction); }
+    path_iterator path_end() { return path_iterator(); }
+
+    /*************************************************************************************************
+     *                                  CLASS IMPLEMENTATIONS
+     *************************************************************************************************/
     class piece_info {
         private:
             coordinate* _pos;
@@ -121,17 +139,28 @@ public:
     class path_iterator {
         private:
             Board* board;
-            coordinate* current;
-            coordinate& origin;
-            coordinate& dir;
+            coordinate current;
+            coordinate begin;
+            coordinate end;
+            coordinate dir;
 
         public:
-            path_iterator(Board* b, coordinate& o, coordinate& d): board{b}, current{new coordinate(o)}, origin{o}, dir{d} {}
-            ~path_iterator() { delete current; }
+            path_iterator(): board{nullptr}, current{coordinate()}, begin{current}, end{current}, dir{current} {}
+
+            path_iterator(Board* b, const coordinate& orig, const coordinate& dest, const coordinate& dir): board{b}, current{coordinate(orig)}, begin{orig}, end{dest}, dir{dir} {
+                coordinate v = dest - orig;
+                if(!are_equivalent(v, dir)) {
+                    std::stringstream ss;
+                    ss << "can not iterate from (" << orig.row << ", " << orig.col << ") to ("
+                       << dest.row << ", " << dest.col << ") using the direction (" << dir.row
+                       << ", " << dir.col << ")\n";
+                    throw std::logic_error(ss.str());
+                }
+            }
 
             path_iterator& operator++() {
-                std::cout << "current: (" << current->row << "," << current->col << ") address: " << std::endl;
-                *current = *current + dir;
+                if(current != coordinate())
+                    current = (current == end)? coordinate(): current + dir;
                 return *this;
             }
 
@@ -142,10 +171,10 @@ public:
             }
 
             piece_info operator*() {
-                if(current->row < 0 || current->row > 7 || current->col < 0 || current->col > 7)
-                    throw "iterator out of bounds!";
+                if(current.row < 0 || current.row > 7 || current.col < 0 || current.col > 7)
+                    throw std::out_of_range("iterator out of bounds!");
                 
-                return board->at(*current);
+                return board->at(current);
             }
             
             bool operator==(const path_iterator& other) { return this->current == other.current; }
