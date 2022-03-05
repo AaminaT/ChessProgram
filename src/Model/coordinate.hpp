@@ -34,20 +34,22 @@ struct coordinate {
     bool operator!=(const coordinate& other) const {
         return !(*this == other);
     }
-
-    friend coordinate rotate(const coordinate& vector, double angle);
-    friend bool are_dependent(const coordinate& vector1, const coordinate& vector2);
 };
 
+// rotates a vector by a given angle in degrees
 coordinate rotate(const coordinate& v, double a) {
     a *= 3.14159265358979324/180.0;
-    int adj = nearbyint(cos(a));
-    int opp = nearbyint(sin(a));
-    return coordinate(v.row*adj - v.col*opp, v.row*opp + v.col*adj);
+    return coordinate(nearbyint(v.row*cos(a) - v.col*sin(a)), nearbyint(v.row*sin(a) + v.col*cos(a)));
 }
 
+// checks if two vectors exist on the same line
+bool are_dependent(const coordinate& v, const coordinate& w) {
+    return v * rotate(w, 90) == 0;
+}
+ 
+// checks if two vectors are positive scalar multiples of eachother
 bool are_equivalent(const coordinate& v, const coordinate& w) {
-    return v * rotate(w, 90) == 0 && v * w > 0;
+    return are_dependent(v, w) && v * w > 0;
 }
 
 #endif

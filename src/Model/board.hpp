@@ -154,7 +154,7 @@ public:
                     ss << "can not iterate from (" << orig.row << ", " << orig.col << ") to ("
                        << dest.row << ", " << dest.col << ") using the direction (" << dir.row
                        << ", " << dir.col << ")\n";
-                    throw std::logic_error(ss.str());
+                    throw std::invalid_argument(ss.str());
                 }
             }
 
