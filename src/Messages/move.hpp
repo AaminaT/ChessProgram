@@ -11,7 +11,7 @@ class Move: public Message {
         int side;
 
     public:
-        Move(): Message() {}
+        Move(coordinate* o, coordinate* d): Message(), origin{o}, destination{d} {}
         
         ~Move() {
             delete origin;
@@ -29,15 +29,33 @@ class Move: public Message {
         }
 
         coordinate get_direction() {
+            coordinate dir = destination - origin;
+            int abs_row = dir.row * (dir.row < 0? -1: 1);
+            int abs_col = dir.col * (dir.col < 0? -1: 1); 
             
+            if(0 < abs_row && abs_row <= abs_col) {
+                dir.row /= abs_row;
+                dir.col /= abs_row;
+            }
+            else if(0 < abs_col) {
+                dir.row /= abs_col;
+                dir.col /= abs_col;
+            }
         }
 
-        coordinate get_origin() {
-            
+        coordinate* get_origin() {
+            return origin;
         }
 
-        coordinate get_destination() {
-        
+        coordinate* get_destination() {
+            return destination;
+        }
+
+        virtual std::string info() {
+            std::stringstream ss;
+            ss << "Move from (" << origin->row << ", " << origin->col
+               << ") to (" << destination->row << ", " << destination->col << ")." << std::endl;
+            return ss.str();
         }
 };
 

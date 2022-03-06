@@ -2,7 +2,6 @@
 #define __COORDINATE_HPP__
 
 #include <cmath>
-#include <iostream>
 
 struct coordinate {
     int row;
@@ -47,7 +46,7 @@ bool are_dependent(const coordinate& v, const coordinate& w) {
     return v * rotate(w, 90) == 0;
 }
  
-// checks if two vectors are positive scalar multiples of eachother
+// checks if two vectors point in the same direction
 bool are_equivalent(const coordinate& v, const coordinate& w) {
     return are_dependent(v, w) && v * w > 0;
 }

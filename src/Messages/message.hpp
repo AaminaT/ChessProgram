@@ -2,6 +2,7 @@
 #define __MESSAGE_HPP__
 
 #include<string>
+#include<sstream>
 
 class Message {
     public:
