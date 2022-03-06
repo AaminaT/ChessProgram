@@ -29,8 +29,9 @@ class Move: public Message {
         }
 
         coordinate get_direction() {
-            coordinate dir = destination - origin;
-            int abs_row = dir.row * (dir.row < 0? -1: 1);
+            coordinate dir = *destination - *origin;
+            
+	    int abs_row = dir.row * (dir.row < 0? -1: 1);
             int abs_col = dir.col * (dir.col < 0? -1: 1); 
             
             if(0 < abs_row && abs_row <= abs_col) {
@@ -41,6 +42,8 @@ class Move: public Message {
                 dir.row /= abs_col;
                 dir.col /= abs_col;
             }
+
+            return dir;
         }
 
         coordinate* get_origin() {

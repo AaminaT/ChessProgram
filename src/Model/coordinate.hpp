@@ -37,7 +37,8 @@ struct coordinate {
 
     std::string stringify() {
         std::stringstream s;
-        s << "(" << row << ", " << col << ")" << std::endl;
+        s << "(" << row << ", " << col << ")";
+	return s.str();
     }
 };
 

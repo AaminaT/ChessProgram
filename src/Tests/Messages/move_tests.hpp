@@ -59,16 +59,16 @@ TEST(MoveTest,  DirectionFloats) {
 TEST(MoveTest,  DirectionComplex) {
     // no move
     Move m1(new coordinate(1, 0), new coordinate(1, 0));
-    EXPECT_EQ(m1.get_direction().stringify(),  "(-1, 1)");
+    EXPECT_EQ(m1.get_direction().stringify(),  "(0, 0)");
 
     Move m2(new coordinate(-8, 8), new coordinate(8, -8));
     EXPECT_EQ(m2.get_direction().stringify(),  "(1, -1)");    
 
     Move m3(new coordinate(12, 12), new coordinate(3, 1));
-    EXPECT_EQ(m3.get_direction().stringify(),  "(-1, 1)");
+    EXPECT_EQ(m3.get_direction().stringify(),  "(-1, -1)");
 
     Move m4(new coordinate(12233, 785131415), new coordinate(0, 333333));
-    EXPECT_EQ(m4.get_direction().stringify(),  "(0, 0)");    
+    EXPECT_EQ(m4.get_direction().stringify(),  "(-1, " + std::to_string((333333 - 785131415)/12233) + ")");    
 }
 
 #endif
