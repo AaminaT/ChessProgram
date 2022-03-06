@@ -2,6 +2,7 @@
 #define __COORDINATE_HPP__
 
 #include <cmath>
+#include <sstream>
 
 struct coordinate {
     int row;
@@ -32,6 +33,11 @@ struct coordinate {
 
     bool operator!=(const coordinate& other) const {
         return !(*this == other);
+    }
+
+    std::string stringify() {
+        std::stringstream s;
+        s << "(" << row << ", " << col << ")" << std::endl;
     }
 };
 
