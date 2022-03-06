@@ -47,7 +47,7 @@ TEST(MoveTest,  DirectionFloats) {
     EXPECT_EQ(m1.get_direction().stringify(),  "(1, 1)");
 
     Move m2(coordinate(1, 2), coordinate(4, 12));
-    EXPECT_EQ(m2.get_direction().stringify(),  "(1, 3)");    
+    EXPECT_EQ(m2.get_direction().stringify(),  "(1, 3)");
 
     Move m3(coordinate(4, 3), coordinate(4, 7));
     EXPECT_EQ(m3.get_direction().stringify(),  "(0, 1)");
