@@ -77,7 +77,7 @@ public:
     piece_iterator piece_begin() { return piece_iterator(this); }
     piece_iterator piece_end() { return piece_iterator(this, 64); }
 
-    path_iterator path_begin(Move& move) { return path_iterator(this, *move.get_origin(), *move.get_destination(), move.get_direction()); }
+    path_iterator path_begin(Move& move) { return path_iterator(this, move.get_origin(), move.get_destination(), move.get_direction()); }
     path_iterator path_begin(coordinate& origin, coordinate& destination, coordinate& direction) { return path_iterator(this, origin, destination, direction); }
     path_iterator path_end() { return path_iterator(); }
 

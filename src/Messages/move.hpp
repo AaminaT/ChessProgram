@@ -6,58 +6,52 @@
 
 class Move: public Message {
     private:
-        coordinate* origin;
-        coordinate* destination;
+        coordinate origin;
+        coordinate destination;
+        coordinate direction;
         int side;
 
     public:
-        Move(coordinate* o, coordinate* d): Message(), origin{o}, destination{d} {}
-        
-        ~Move() {
-            delete origin;
-            delete destination;
+        Move(const coordinate& origin, const coordinate& destination): Message(), origin{origin}, destination{destination} {
+            direction = coordinate(destination - origin);
+
+	        int abs_row = direction.row * (direction.row < 0? -1: 1);
+            int abs_col = direction.col * (direction.col < 0? -1: 1); 
+            
+            if(0 < abs_row && abs_row <= abs_col) {
+                direction.row /= abs_row;
+                direction.col /= abs_row;
+            }
+            else if(0 < abs_col) {
+                direction.row /= abs_col;
+                direction.col /= abs_col;
+            }
         }
 
-        void set_origin(coordinate* c) {
-            delete origin;
+        void set_origin(const coordinate& c) {
             origin = c;
         }
 
-        void set_destination(coordinate* c) {
-            delete destination;
+        void set_destination(const coordinate& c) {
             destination = c;
         }
 
         coordinate get_direction() {
-            coordinate dir = *destination - *origin;
-            
-	    int abs_row = dir.row * (dir.row < 0? -1: 1);
-            int abs_col = dir.col * (dir.col < 0? -1: 1); 
-            
-            if(0 < abs_row && abs_row <= abs_col) {
-                dir.row /= abs_row;
-                dir.col /= abs_row;
-            }
-            else if(0 < abs_col) {
-                dir.row /= abs_col;
-                dir.col /= abs_col;
-            }
-
-            return dir;
+            return direction;
         }
 
-        coordinate* get_origin() {
+        coordinate get_origin() {
             return origin;
         }
 
-        coordinate* get_destination() {
+        coordinate get_destination() {
             return destination;
         }
 
         virtual std::string info() {
             std::stringstream ss;
-            ss << "Move from (" << origin->row << ", " << origin->col
-               << ") to (" << destination->row << ", " << destination->col << ")." << std::endl;
+            ss << "Move from (" << origin.row << ", " << origin.col
+               << ") to (" << destination.row << ", " << destination.col << ")." << std::endl;
             return ss.str();
         }
 };
