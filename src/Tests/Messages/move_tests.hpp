@@ -9,9 +9,9 @@ TEST(MoveTest, BaseCase) {
     EXPECT_TRUE(*m1.get_destination() == coordinate(3,2));
 
     Move m2(new coordinate(1,0), new coordinate(0,1));
-    EXPECT_TRUE(*m1.get_origin() == coordinate(1,0));
-    EXPECT_TRUE(*m1.get_destination() == coordinate(0,1));
-    EXPECT_EQ(m1.info(), "Move from (1, 0) to (0, 1).");
+    EXPECT_TRUE(*m2.get_origin() == coordinate(1,0));
+    EXPECT_TRUE(*m2.get_destination() == coordinate(0,1));
+    EXPECT_EQ(m2.info(), "Move from (1, 0) to (0, 1).\n");
 }
 
 TEST(MoveTest, DirectionBase) {
