@@ -17,15 +17,15 @@ class Move: public Message {
 
 	        int abs_row = direction.row * (direction.row < 0? -1: 1);
             int abs_col = direction.col * (direction.col < 0? -1: 1); 
-            
-            if(0 < abs_row && abs_row <= abs_col) {
-                direction.row /= abs_row;
-                direction.col /= abs_row;
-            }
-            else if(0 < abs_col) {
-                direction.row /= abs_col;
-                direction.col /= abs_col;
-            }
+            int smallest;
+
+            if(abs_row != 0)
+                smallest = abs_row;
+            if(abs_col != 0 && abs_col <= smallest)
+                smallest = abs_col;
+
+            direction.row /= smallest;
+            direction.col /= smallest;
         }
 
         void set_origin(const coordinate& c) {
