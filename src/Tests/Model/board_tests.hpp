@@ -78,15 +78,18 @@ TEST(BoardTests, PathIteratorTest) {
     EXPECT_EQ(pos_stream.str(), "(0, 0)(1, 1)(2, 2)(3, 3)(4, 4)(5, 5)(6, 6)(7, 7)");
 
     piece_stream.clear();
+    piece_stream.str(std::string());
     side_stream.clear();
+    side_stream.str(std::string());
     pos_stream.clear();
+    pos_stream.str(std::string());
     for(it2; it2 != b->path_end(); it2++) {
         piece_stream << (*it2).piece();
         side_stream << (*it2).side();
         pos_stream << (*it2).pos().stringify();
     }
-    EXPECT_EQ(piece_stream.str(), "pppppp p");
-    EXPECT_EQ(side_stream.str(), "11111101");
+    EXPECT_EQ(piece_stream.str(), "p pppppp");
+    EXPECT_EQ(side_stream.str(), "10111111");
     EXPECT_EQ(pos_stream.str(), "(6, 7)(6, 6)(6, 5)(6, 4)(6, 3)(6, 2)(6, 1)(6, 0)");
 
     EXPECT_ANY_THROW(b->path_begin(coordinate(0,0), coordinate(7,1), coordinate(1,0)));
