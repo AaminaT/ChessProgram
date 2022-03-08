@@ -16,17 +16,21 @@ TEST(BoardTests, BaseCase) {
 TEST(BoardTests, MoveTest) {
     Board* b1 = Board().move(coordinate(0,0), coordinate(3,5), 0);
     Board* b2 = b1->move(coordinate(7,7), coordinate(3,5), 200);
+    Board* b3 = b2->move(coordinate(0,3), coordinate(7,2), 300);
     std::string out1 = " NBQKBNR\nPPPPPPPP\n        \n     R  \n        \n        \npppppppp\nrnbkqbnr\n";
     std::string out2 = " NBQKBNR\nPPPPPPPP\n        \n     r  \n        \n        \npppppppp\nrnbkqbn \n";
     std::stringstream ss;
     
     b1->print(ss);
     EXPECT_EQ(ss.str(), out1);
-    EXPECT_EQ(b1->get_value(), 0);
-    
+    EXPECT_EQ(b1->get_value(), -1);
+
+    ss.clear();
+    ss.str(std::string());    
     b2->print(ss);
     EXPECT_EQ(ss.str(), out2);
-    EXPECT_EQ(b2->get_value(), 200);
+    EXPECT_EQ(b2->get_value(), 198);
+    EXPECT_EQ(b3->get_value(), -97);
 }
 
 TEST(BoardTests, PieceIteratorTest) {
@@ -47,6 +51,7 @@ TEST(BoardTests, PieceIteratorTest) {
     std::string out2 = "RNBKBNRPPPPPPPPpppppQpprnbkqbnr";
     b = Board().move(coordinate(0,3), coordinate(6,5), 200);
     
+    i = 0;
     coordinate* c = nullptr;
     for(auto it = b->piece_begin(); it != b->piece_end(); it++) {
         ASSERT_EQ((*it).piece(), out2[i]);
@@ -56,7 +61,7 @@ TEST(BoardTests, PieceIteratorTest) {
 }
 
 TEST(BoardTests, PathIteratorTest) {
-
+    
 }
 
 #endif

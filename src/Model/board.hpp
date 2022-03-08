@@ -42,7 +42,7 @@ public:
     Board* move(const coordinate& origin, const coordinate& destination, int piece_value) {
         Board* b = new Board(*this);
 
-	    b->board[origin.row*8 + origin.col] = ' ';
+	b->board[origin.row*8 + origin.col] = ' ';
         b->board[destination.row*8 + destination.col] = at(origin.row, origin.col);
         ++b->depth;
         b->value += piece_value*side(origin.row, origin.col);
