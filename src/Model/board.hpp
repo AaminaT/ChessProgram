@@ -153,7 +153,9 @@ public:
 
             path_iterator(Board* b, const coordinate& orig, const coordinate& dest, const coordinate& dir): board{b}, current{coordinate(orig)}, begin{orig}, end{dest}, dir{dir} {
                 coordinate v = dest - orig;
-                if(!are_equivalent(v, dir)) {
+                if(!are_equivalent(v, dir) ||
+                   end.row > 7 || end.row < 0 ||
+                   end.col > 7 || end.col < 0) {
                     std::stringstream ss;
                     ss << "can not iterate from (" << orig.row << ", " << orig.col << ") to ("
                        << dest.row << ", " << dest.col << ") using the direction (" << dir.row

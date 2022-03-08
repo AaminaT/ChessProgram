@@ -35,7 +35,6 @@ TEST(BoardTests, MoveTest) {
 
 TEST(BoardTests, PieceIteratorTest) {
     Board* b = new Board();
-    std::stringstream ss;
     std::string out1 = "RNBQKBNRPPPPPPPPpppppppprnbkqbnr";
 
     int i = 0;
@@ -61,29 +60,37 @@ TEST(BoardTests, PieceIteratorTest) {
 }
 
 TEST(BoardTests, PathIteratorTest) {
-    Board* b = new Board();
-    std::stringstream ss;
-    std::string out1 = "RNBQKBNRPPPPPPPPpppppppprnbkqbnr";
-
-    int i = 0;
-    for(auto it = b->piece_begin(); it != b->piece_end(); it++) {
-        ASSERT_EQ((*it).piece(), out1[i]);
-        ASSERT_EQ((*it).pos().stringify(), coordinate(i/8 + (i < 16? 0: 4), i%8).stringify());
-        ASSERT_EQ((*it).isWhite(), i > 15);
-        i++;
-    }
-    EXPECT_EQ(i, 32);
-
-    delete b;
-    std::string out2 = "RNBKBNRPPPPPPPPpppppQpprnbkqbnr";
-    b = Board().move(coordinate(0,3), coordinate(6,5), 200);
+    Board* b = Board().move(coordinate(6,6), coordinate(3,3), 200);
+    auto it1 = b->path_begin(coordinate(0,0), coordinate(7,7), coordinate(1,1));
+    auto it2 = b->path_begin(coordinate(6,7), coordinate(6,0), coordinate(0,-1));
+    std::stringstream piece_stream;
+    std::stringstream side_stream;
+    std::stringstream pos_stream;
     
-    coordinate* c = nullptr;
-    for(auto it = b->piece_begin(); it != b->piece_end(); it++) {
-        ASSERT_EQ((*it).piece(), out2[i]);
-        i++;
+    for(it1; it1 != b->path_end(); it1++) {
+        piece_stream << (*it1).piece();
+        side_stream << (*it1).side();
+        pos_stream << (*it1).pos().stringify();
     }
-    EXPECT_NE(i, 32);
+
+    EXPECT_EQ(piece_stream.str(), "RP p   r");
+    EXPECT_EQ(side_stream.str(), "-1-1010001");
+    EXPECT_EQ(pos_stream.str(), "(0, 0)(1, 1)(2, 2)(3, 3)(4, 4)(5, 5)(6, 6)(7, 7)");
+
+    piece_stream.clear();
+    side_stream.clear();
+    pos_stream.clear();
+    for(it2; it2 != b->path_end(); it2++) {
+        piece_stream << (*it2).piece();
+        side_stream << (*it2).side();
+        pos_stream << (*it2).pos().stringify();
+    }
+    EXPECT_EQ(piece_stream.str(), "pppppp p");
+    EXPECT_EQ(side_stream.str(), "11111101");
+    EXPECT_EQ(pos_stream.str(), "(6, 7)(6, 6)(6, 5)(6, 4)(6, 3)(6, 2)(6, 1)(6, 0)");
+
+    EXPECT_ANY_THROW(b->path_begin(coordinate(0,0), coordinate(7,1), coordinate(1,0)));
+    EXPECT_ANY_THROW(b->path_begin(coordinate(1,0), coordinate(8,0), coordinate(1,0)));
 }
 
 #endif
