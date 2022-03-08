@@ -56,8 +56,7 @@ void Board::printBoard() {
     }
 }
 
-void Board::setBoard()
-{
+void Board::setBoard(){
     square[0][0].setPieceAndColor(ROOK, WHITE);
     square[1][0].setPieceAndColor(KNIGHT, WHITE);
     square[2][0].setPieceAndColor(BISHOP, WHITE);
