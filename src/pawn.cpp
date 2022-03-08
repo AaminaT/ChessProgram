@@ -27,14 +27,14 @@ bool Pawn::IsMoveValid(Move move,Board* board)
 		if (orig.col == dest.col)
 		{
 			//orig.row < dest.row
-			if (distance < 1  || board->at(dest.row, dest.col) != ' ')
+			if (distance < 1  || piece_info->at(dest) != ' ')
 				return false;
 		}
 		// for two space move, program will check 1 space ahead first
 		// 4. same column - can move 2 steps when at row 1 (rows: [0-7]) if nothing directly infront
 		if (orig.col == dest.col)
 		{
-			if (distance > 2 || board->at(dest.row, dest.col) != ' ' || orig.row != 1)
+			if (distance > 2 || piece_info->at(dest) != ' ' || orig.row != 1)
 				return false;
 		}
 		// 5. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront of the
@@ -43,7 +43,7 @@ bool Pawn::IsMoveValid(Move move,Board* board)
 			int distanceRow = dest.row - orig.row -1;
 			//a pawn piece can move to either column
 			int distanceCol = (orig.col < dest.col ? (dest.col - orig.col) - 1 : (orig.col - dest.col) - 1);
-			if ((distanceRow != 0 && distanceCol != 0) || board->at(dest.row, dest.col) == ' ')
+			if ((distanceRow != 0 && distanceCol != 0) || piece_info->at(dest) == ' ')
 				return false;
 		}
 	}
@@ -64,14 +64,14 @@ bool Pawn::IsMoveValid(Move move,Board* board)
 		if (orig.col == dest.col)
 		{
 			//orig.row > dest.row
-			if (distance > -1 || board->at(dest.row, dest.col) != ' ')
+			if (distance > -1 || piece_info->at(dest) != ' ')
 				return false;
 		}
 		// for two space move, program will check 1 space ahead first
 		// 4. same column - can move 2 steps when at row 6 (rows: [0-7]) if nothing directly infront
 		if (orig.col == dest.col)
 		{
-			if (distance < -2 || board->at(dest.row, dest.col) != ' ' || orig.row != 6)
+			if (distance < -2 || piece_info->at(dest) != ' ' || orig.row != 6)
 				return false;
 		}
 		// 5. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront of the
@@ -80,7 +80,7 @@ bool Pawn::IsMoveValid(Move move,Board* board)
 			int distanceRow = orig.col - dest.col - 1;
 			//a pawn piece can move to either column
 			int distanceCol = (orig.col < dest.col ? (dest.col - orig.col) - 1 : (orig.col - dest.col) - 1);
-			if ((distanceRow != 0 && distanceCol != 0) || board->at(dest.row, dest.col) == ' ')
+			if ((distanceRow != 0 && distanceCol != 0) || piece_info->at(dest) == ' ')
 				return false;
 		}
 	}
