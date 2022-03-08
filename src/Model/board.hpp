@@ -39,9 +39,10 @@ public:
     piece_info at(coordinate& pos) const { return piece_info(new coordinate(pos), at(pos.row, pos.col), side(pos.row, pos.col)); }
 
     // move: return a new board with a move applied to it
-    Board* move(coordinate& origin, coordinate& destination, int piece_value) {
+    Board* move(const coordinate& origin, const coordinate& destination, int piece_value) {
         Board* b = new Board(*this);
 
+	b->board[origin.row*8 + origin.col] = ' ';
         b->board[destination.row*8 + destination.col] = at(origin.row, origin.col);
         ++b->depth;
         b->value += piece_value*side(origin.row, origin.col);
