@@ -36,13 +36,13 @@ public:
     // at: get piece at a specific position on the board
     char at(int x) const { return board[x]; }
     char at(int row, int col) const { return at(row*8 + col); }
-    piece_info at(coordinate& pos) const { return piece_info(new coordinate(pos), at(pos.row, pos.col), side(pos.row, pos.col)); }
+    piece_info at(const coordinate& pos) const { return piece_info(new coordinate(pos), at(pos.row, pos.col), side(pos.row, pos.col)); }
 
     // move: return a new board with a move applied to it
     Board* move(const coordinate& origin, const coordinate& destination, int piece_value) {
         Board* b = new Board(*this);
 
-	b->board[origin.row*8 + origin.col] = ' ';
+	    b->board[origin.row*8 + origin.col] = ' ';
         b->board[destination.row*8 + destination.col] = at(origin.row, origin.col);
         ++b->depth;
         b->value += piece_value*side(origin.row, origin.col);
@@ -56,6 +56,9 @@ public:
 
     // get_value: returns evaluation of the current board state
     int get_value() const { return value + (value < 0? 1: -1)*depth; }
+
+    // get_turn: returns current turn (0 refers to initial board)
+    int get_turn() const { return depth; }
 
     void print(std::ostream& out) {
         for(int i = 0; i < 64; i++) {    
