@@ -1,4 +1,3 @@
- (DISCORD NOT WORKING ATM, USE SLACK INSTEAD)
  # Chess
  
  Authors:  
