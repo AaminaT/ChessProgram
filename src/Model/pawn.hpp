@@ -52,7 +52,7 @@ class Pawn : public Piece {
 			if(distance == 1 && are_equivalent(coordinate(1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
     				return true;
 			if(distance == 1 && are_equivalent(coordinate(-1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
-				return true;
+				return true;	
 			return validMove;
 		};
 };
