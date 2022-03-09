@@ -85,14 +85,17 @@ class Pawn : public Piece {
 					if (distance < -2 || board->at(dest) != ' ' || orig.row != 6)
 						return false;
 				}
-				// 5. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront of the
-				if (orig.row != dest.row && orig.col != dest.col)
+				// 5. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront and same team
+				if( ( are_dependent(coordinate(1,1), move->get_direction()) || are_dependent(coordinate(-1,1), move->get_direction()) ) )
 				{
-					int distanceRow = orig.col - dest.col - 1;
-					//a pawn piece can move to either column
-					int distanceCol = (orig.col < dest.col ? (dest.col - orig.col) - 1 : (orig.col - dest.col) - 1);
-					if ((distanceRow != 0 && distanceCol != 0) || board->at(dest) == ' ')
+					if(distance != 1 && targeted_piece.side() == moving_piece.side())
 						return false;
+				}
+				// 6. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront and opposite team
+				if( ( are_dependent(coordinate(1,1), move->get_direction()) || are_dependent(coordinate(-1,1), move->get_direction()) ) )
+				{
+					if(distance == 1 && targeted_piece.side() != moving_piece.side())
+						return validMove;
 				}
 			}
 			return validMove;
