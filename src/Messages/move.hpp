@@ -60,6 +60,11 @@ class Move: public Message {
                << ") to (" << destination.row << ", " << destination.col << ")." << std::endl;
             return ss.str();
         }
+
+        virtual void accept(MsgHandler* h, Observer* src) {
+            Move* _this = this;
+            h->handle(_this, src);
+        }
 };
 
 #endif
