@@ -7,11 +7,17 @@ class Pawn : public Piece {
 		bool IsMoveValid(Move move,Board* board)
 		{
 			bool validMove = true;
+			
 			coordinate orig = move.get_origin();
 			coordinate dest = move.get_destination();
+			
 			int distance = move.get_distance();
+			
 			int number_turn = board->get_turn();
-		
+			
+			auto moving_piece = board->at(move->get_origin());
+			auto targeted_piece = board->at(move->get_destination());
+			
 			//row 1 starting position
 			if (number_turn % 2 == 0) //even turn = black piece
 			{
@@ -26,29 +32,30 @@ class Pawn : public Piece {
 					return false;
 				}
 				// 3. same column - can move 1 if nothing directly infront
-/*
  				if (orig.col == dest.col)
 				{
 					//orig.row < dest.row
 					if (distance < 1  || board->at(dest) != ' ')
 						return false;
 				}
-*/
 				// for two space move, program will check 1 space ahead first
 				// 4. same column - can move 2 steps when at row 1 (rows: [0-7]) if nothing directly infront
 				if (orig.col == dest.col)
 				{
-					//if (distance > 2 || board->at(dest) != ' ' || orig.row != 1)
-					//	return false;
+					if (distance > 2 || board->at(dest) != ' ' || orig.row != 1)
+						return false;
 				}
-				// 5. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront of the
-				if (orig.row != dest.row && orig.col != dest.col)
+				// 5. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront and same team
+				if( ( are_dependent(coordinate(1,1), move->get_direction()) || are_dependent(coordinate(-1,1), move->get_direction()) ) )
 				{
-					int distanceRow = dest.row - orig.row -1;
-					//a pawn piece can move to either column
-					int distanceCol = (orig.col < dest.col ? (dest.col - orig.col) - 1 : (orig.col - dest.col) - 1);
-					//if ((distanceRow != 0 && distanceCol != 0) || board->at(dest) == ' ')
-					//	return false;
+					if(distance != 1 && targeted_piece.side() == moving_piece.side())
+						return false;
+				}
+				// 6. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront and opposite team
+				if( ( are_dependent(coordinate(1,1), move->get_direction()) || are_dependent(coordinate(-1,1), move->get_direction()) ) )
+				{
+					if(distance == 1 && targeted_piece.side() != moving_piece.side())
+						return validMove;
 				}
 			}
 			//row 6 starting position
@@ -68,15 +75,15 @@ class Pawn : public Piece {
 				if (orig.col == dest.col)
 				{
 					//orig.row > dest.row
-					//if (distance > -1 || board->at(dest) != ' ')
-					//	return false;
+					if (distance > -1 || board->at(dest) != ' ')
+						return false;
 				}
 				// for two space move, program will check 1 space ahead first
 				// 4. same column - can move 2 steps when at row 6 (rows: [0-7]) if nothing directly infront
 				if (orig.col == dest.col)
 				{
-					//if (distance < -2 || board->at(dest) != ' ' || orig.row != 6)
-					//	return false;
+					if (distance < -2 || board->at(dest) != ' ' || orig.row != 6)
+						return false;
 				}
 				// 5. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront of the
 				if (orig.row != dest.row && orig.col != dest.col)
@@ -84,8 +91,8 @@ class Pawn : public Piece {
 					int distanceRow = orig.col - dest.col - 1;
 					//a pawn piece can move to either column
 					int distanceCol = (orig.col < dest.col ? (dest.col - orig.col) - 1 : (orig.col - dest.col) - 1);
-					//if ((distanceRow != 0 && distanceCol != 0) || board->at(dest) == ' ')
-					//	return false;
+					if ((distanceRow != 0 && distanceCol != 0) || board->at(dest) == ' ')
+						return false;
 				}
 			}
 			return validMove;
