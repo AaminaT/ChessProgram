@@ -21,10 +21,13 @@ class Pawn : public Piece {
 			
 			int p = number_turn%2 == 0? -1: 1;
 			
+			//pawn cannot move more than 2 spaces and specific color in specific direction
 			if(distance < 3 && are_equivalent(coordinate(1,0) * p, direction))
 			{
+				//can move 2 spaces only at row 6 or 1 (rows = 0-7)
 				if(distance == 2 && orig.row == (moving_piece.isWhite()? 6: 1))
 				{
+					//check to see if there is a piece in the path in between origin and destination
 					auto it = board->path_begin(*move);
 					it++;
 					bool has = true;
@@ -38,8 +41,10 @@ class Pawn : public Piece {
 					}
 					return has;
 				}
+				//can move 2 spaces only at row 6 or 1 (rows = 0-7)
 				else if(distance == 1)
 				{
+					//check to see if there is a piece directly in front
 					auto it = board->path_begin(*move);
 					it++;
 					bool has = true;
@@ -48,7 +53,7 @@ class Pawn : public Piece {
 					return has;
 				}
 			}
-			
+			//check both diagonal movements, can only be true if distance = 1 and opposite color piece at destination
 			if(distance == 1 && are_equivalent(coordinate(1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
     				return true;
 			if(distance == 1 && are_equivalent(coordinate(-1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
