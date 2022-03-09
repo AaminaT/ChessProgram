@@ -4,100 +4,55 @@ using namespace std;
 
 class Pawn : public Piece {
 	public:
-		bool IsMoveValid(Move move,Board* board)
+		bool isMoveValid(Move* move,Board* board)
 		{
-			bool validMove = true;
+			bool validMove = false;
 			
-			coordinate orig = move.get_origin();
-			coordinate dest = move.get_destination();
+			coordinate orig = move->get_origin();
+			coordinate dest = move->get_destination();
 			
-			int distance = move.get_distance();
+			int distance = move->get_distance();
+			coordinate direction = move->get_direction();
 			
 			int number_turn = board->get_turn();
 			
 			auto moving_piece = board->at(move->get_origin());
 			auto targeted_piece = board->at(move->get_destination());
 			
-			//row 1 starting position
-			if (number_turn % 2 == 0) //even turn = black piece
+			int p = number_turn%2 == 0? -1: 1;
+			
+			if(distance < 3 && are_equivalent(coordinate(1,0) * p, direction))
 			{
-				// 1. <--> movement is not allowed
-				if (orig.row == dest.row)
+				if(distance == 2 && orig.row == (moving_piece.isWhite()? 6: 1))
 				{
-					return false;
+					auto it = board->path_begin(*move);
+					it++;
+					bool has = true;
+					for(it; it != board->path_end(); it++)
+					{
+						if((*it).hasPiece())
+						{
+							has = false;
+							break;
+						}
+					}
+					return has;
 				}
-				// 2. up movement is not allowed
-				if (orig.row > dest.row)
+				else if(distance == 1)
 				{
-					return false;
-				}
-				// 3. same column - can move 1 if nothing directly infront
- 				if (orig.col == dest.col)
-				{
-					//orig.row < dest.row
-					if (distance < 1  || board->at(dest) != ' ')
-						return false;
-				}
-				// for two space move, program will check 1 space ahead first
-				// 4. same column - can move 2 steps when at row 1 (rows: [0-7]) if nothing directly infront
-				if (orig.col == dest.col)
-				{
-					if (distance > 2 || board->at(dest) != ' ' || orig.row != 1)
-						return false;
-				}
-				// 5. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront and same team
-				if( ( are_dependent(coordinate(1,1), move->get_direction()) || are_dependent(coordinate(-1,1), move->get_direction()) ) )
-				{
-					if(distance != 1 && targeted_piece.side() == moving_piece.side())
-						return false;
-				}
-				// 6. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront and opposite team
-				if( ( are_dependent(coordinate(1,1), move->get_direction()) || are_dependent(coordinate(-1,1), move->get_direction()) ) )
-				{
-					if(distance == 1 && targeted_piece.side() != moving_piece.side())
-						return validMove;
+					auto it = board->path_begin(*move);
+					it++;
+					bool has = true;
+					if((*it).hasPiece())
+						has = false;
+					return has;
 				}
 			}
-			//row 6 starting position
-			else //odd turn = white piece
-			{
-				// 1. <--> movement is not allowed
-				if (orig.row == dest.row)
-				{
-					return false;
-				}
-				// 2. down movement is not allowed
-				if (orig.row < dest.row)
-				{
-					return false;
-				}
-				// 3. same column - can move 1 if nothing directly infront
-				if (orig.col == dest.col)
-				{
-					//orig.row > dest.row
-					if (distance > -1 || board->at(dest) != ' ')
-						return false;
-				}
-				// for two space move, program will check 1 space ahead first
-				// 4. same column - can move 2 steps when at row 6 (rows: [0-7]) if nothing directly infront
-				if (orig.col == dest.col)
-				{
-					if (distance < -2 || board->at(dest) != ' ' || orig.row != 6)
-						return false;
-				}
-				// 5. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront and same team
-				if( ( are_dependent(coordinate(1,1), move->get_direction()) || are_dependent(coordinate(-1,1), move->get_direction()) ) )
-				{
-					if(distance != 1 && targeted_piece.side() == moving_piece.side())
-						return false;
-				}
-				// 6. diagonals - when pawn has another piece in that adajacent diagonal destination is 1 space infront and opposite team
-				if( ( are_dependent(coordinate(1,1), move->get_direction()) || are_dependent(coordinate(-1,1), move->get_direction()) ) )
-				{
-					if(distance == 1 && targeted_piece.side() != moving_piece.side())
-						return validMove;
-				}
-			}
+			
+			if(distance == 1 && are_equivalent(coordinate(1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
+    				return true;
+			if(distance == 1 && are_equivalent(coordinate(-1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
+				return true;
 			return validMove;
 		};
 };
