@@ -8,6 +8,7 @@ bool Rook::isMoveValid(Move* move, Board* board)
 
 	coordinate dir = move->get_direction();
 	coordinate dist = move->get_distance();
+	coordinate dest = move->get_destination();
 
 	// clear path check for both vertical and horizontal paths
 	// * only need to check for one coordinate direction (->) since paths expand in both directions (<->)
@@ -15,11 +16,8 @@ bool Rook::isMoveValid(Move* move, Board* board)
                 Board::path_iterator it = board->path_begin(*move);
                 ++it;
                 while (it != board->path_end()) {
-                        if ((*it).hasPiece()){
-				if(++it != board->path_end()) {
-					return false;
-                                }
-				--it;
+                        if ((*it).hasPiece() && ((*it).pos() != dest)){
+				return false;
                         }
                         ++it;
                 }
@@ -29,7 +27,6 @@ bool Rook::isMoveValid(Move* move, Board* board)
         }
 
 	coordinate orig = move->get_origin();
-	coordinate dest = move->get_destination();
 
 	// if path is clear, check if there is a piece on landing coordinate
 	if (board->at(dest).piece() != ' ') {
