@@ -16,8 +16,14 @@ class Game: public Observer, public Listener {
 
     public:
 	Game(Observer* player1, Observer* player2): Observer(), Listener() {
-            this->addObserver(player1);
-            this->addObserver(player2);
+        	this->addObserver(player1);
+		this->addObserver(player2);
+		pieces.insert('p', new Pawn());
+		pieces.insert('k', new King());
+		pieces.insert('q', new Queen());
+		pieces.insert('r', new Rook());
+		pieces.insert('b', new Bishop());
+		pieces.insert('n', new Knight());
         }
         
         /*~Game() {
