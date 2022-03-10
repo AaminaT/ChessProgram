@@ -160,4 +160,20 @@ TEST(QueenTests, WhiteQueenCaptureDistanceGreaterThan1Diagonal)
         delete move;
 }
 
+TEST(QueenTests, WhiteQueenCaptureWhite)
+{
+	Board* board1 = new Board();
+	Board* board2 = board1->move(coordinate(6, 3), coordinate(4, 3), 1);
+	Board* board3 = board2->move(coordinate(1, 3), coordinate(3, 3), 1);
+
+	Move* move = new Move(coordinate(7, 3), coordinate(4, 3));
+	Queen q;
+
+	EXPECT_EQ(q.isMoveValid(move, board3), false);
+	delete board1;
+	delete board2;
+	delete board3;
+	delete move;
+}
+
 #endif
