@@ -127,4 +127,52 @@ TEST(RookTests, BlackClearPathHorizontal)
         delete move;
 }
 
+TEST(RookTests, WhiteRookCaptureDistance1)
+{
+	Board* board1 = new Board();
+	Board* board2 = board1->move(coordinate(6, 0), coordinate(4, 0), 1);
+	Board* board3 = board2->move(coordinate(1, 0), coordinate(3, 0), 1);
+	Board* board4 = board3->move(coordinate(7, 0), coordinate(5, 0), 1);
+	Board* board5 = board4->move(coordinate(1, 1), coordinate(3, 1), 1);
+	Board* board6 = board5->move(coordinate(5, 0), coordinate(5, 1), 1);
+	Board* board7 = board6->move(coordinate(3, 1), coordinate(4, 1), 1);
+
+	Move* move = new Move(coordinate(5, 1), coordinate(4, 1));
+	Rook r;
+
+	EXPECT_EQ(r.isMoveValid(move, board7), true);
+	delete board1;
+	delete board2;
+	delete board3;
+	delete board4;
+	delete board5;
+	delete board6;
+	delete board7;
+	delete move;
+}
+
+TEST(RookTests, WhiteRookCaptureDistanceGreaterThan1)
+{
+	Board* board1 = new Board();
+        Board* board2 = board1->move(coordinate(6, 0), coordinate(4, 0), 1);
+        Board* board3 = board2->move(coordinate(1, 0), coordinate(3, 0), 1);
+        Board* board4 = board3->move(coordinate(7, 0), coordinate(5, 0), 1);
+        Board* board5 = board4->move(coordinate(1, 1), coordinate(3, 1), 1);
+        Board* board6 = board5->move(coordinate(5, 0), coordinate(5, 1), 1);
+        Board* board7 = board6->move(coordinate(1, 7), coordinate(3, 7), 1);
+
+        Move* move = new Move(coordinate(5, 1), coordinate(3, 1));
+        Rook r;
+
+        EXPECT_EQ(r.isMoveValid(move, board7), true);
+        delete board1;
+        delete board2;
+        delete board3;
+        delete board4;
+        delete board5;
+        delete board6;
+        delete board7;
+        delete move;	
+}
+
 #endif
