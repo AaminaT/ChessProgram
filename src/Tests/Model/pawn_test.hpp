@@ -208,4 +208,48 @@ TEST(PawnTests,CaptureWLeft) {
         delete m;
 }
 
+TEST(PawnTests,WCaptureWLeft) {
+        Board* b1 = new Board();
+        Board* b2 = Board().move(coordinate(6,3), coordinate(4,3) , 1);
+        Board* b3 = b2->move(coordinate(1,3), coordinate(3,3) , 1);
+	
+        Board* b4 = b3->move(coordinate(6,4), coordinate(5,4) , 1);
+        Board* b5 = b4->move(coordinate(1,4), coordinate(2,4) , 1);
+	
+        Move* m = new Move(coordinate(5,4), coordinate(4,3));
+        
+        Pawn test_piece;
+        
+        EXPECT_EQ(test_piece.isMoveValid(m,b5),false);
+        delete b1;
+        delete b2;
+        delete b3;
+        delete b4;
+	delete b5;
+        delete m;
+}
+
+TEST(PawnTests,BCaptureBLeft) {
+        Board* b1 = new Board();
+        Board* b2 = Board().move(coordinate(6,3), coordinate(4,3) , 1);
+        Board* b3 = b2->move(coordinate(1,3), coordinate(3,3) , 1);
+
+        Board* b4 = b3->move(coordinate(6,4), coordinate(5,4) , 1);
+        Board* b5 = b4->move(coordinate(1,4), coordinate(2,4) , 1);
+
+        Board* b6 = b5->move(coordinate(6,7), coordinate(5,7) , 1);
+	Move* m = new Move(coordinate(2,4), coordinate(3,3));
+
+        Pawn test_piece;
+
+        EXPECT_EQ(test_piece.isMoveValid(m,b6),false);
+        delete b1;
+        delete b2;
+        delete b3;
+        delete b4;
+        delete b5;
+	delete b6;
+        delete m;
+}
+
 #endif
