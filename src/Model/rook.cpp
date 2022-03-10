@@ -7,19 +7,25 @@ bool Rook::isMoveValid(Move* move, Board* board)
 	bool validMove = true;
 
 	coordinate dir = move->get_direction();
+	coordinate dist = move->get_distance();
 
 	// clear path check for both vertical and horizontal paths
 	// * only need to check for one coordinate direction (->) since paths expand in both directions (<->)
-	if (are_dependent(coordinate(1, 0), dir) || are_dependent(coordinate(0, 1), dir)) {
-		Board::path_iterator it = board->path_begin(*move);
-		while (it != board->path_end()) {
-			++it;
-			if ((*it).hasPiece())
-				return false;
-		}
-	}
-	else {
-		return false;
+	if (move->get_distance() > 1)
+	{
+		if (are_dependent(coordinate(1, 0), dir) || are_dependent(coordinate(0, 1), dir)) {
+                	Board::path_iterator it = board->path_begin(*move);
+                	++it;
+                	while (it != board->path_end()) {
+                        	if ((*it).hasPiece()){
+                                	return false;
+                        	}
+                        	++it;
+                	}
+        	}
+       		else {
+               		return false;
+        	}
 	}
 
 	coordinate orig = move->get_origin();
