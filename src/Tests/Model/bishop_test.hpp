@@ -1,8 +1,8 @@
 #include "../../Model/bishop.hpp"
 
 TEST(BishopTests,WhiteMoveMid) {
-        Board* b = new Board();
-        Move* m1 = new Move(coordinate(4,5), coordinate(2,4));
+        Board* b = Board().move(coordinate(7,2), coordinate(4,5),2 );
+        Move* m1 = new Move(coordinate(4,5), coordinate(2,3));
         Bishop test_piece;
 
         EXPECT_EQ(test_piece.isMoveValid(m1,b),true);
@@ -22,7 +22,7 @@ TEST(BishopTests,WhiteMoveMidWrong) {
 
 TEST(BishopTests,WhiteMoveMid2) {
         Board* b = new Board();
-        Move* m1 = new Move(coordinate(2,5), coordinate(0,3));
+        Move* m1 = new Move(coordinate(3,5), coordinate(1,3));
         Bishop test_piece;
 
         EXPECT_EQ(test_piece.isMoveValid(m1,b),true);

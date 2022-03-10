@@ -18,24 +18,15 @@ class Bishop : public Piece {
             
             auto moving_piece = board->at(move->get_origin());
             auto targeted_piece = board->at(move->get_destination());
-	    if(are_equivalent(coordinate(1,1) , direction) && targeted_piece.side() != moving_piece.side()){
+
+	//if(move->get_distance()>1){
+	
+	    if((are_dependent(coordinate(1,1) , direction)||are_dependent(coordinate(-1,1), direction)) && targeted_piece.side() != moving_piece.side()){
                 auto it = board->path_begin(*move);
                 it++;
                 bool has = true;
                 for(it; it != board->path_end(); it++){
-                    if((*it).hasPiece()){
-                        has = false;
-                        break;
-                    }
-                }
-                return has;
-            }
-            if(are_equivalent(coordinate(-1,1), direction) && targeted_piece.side() != moving_piece.side()){
-                auto it = board->path_begin(*move);
-                it++;
-                bool has = true;
-                for(it; it != board->path_end(); it++){
-                    if((*it).hasPiece()){
+                    if((*it).hasPiece() && (*it).pos()!=dest){
                         has = false;
                         break;
                     }
@@ -43,5 +34,6 @@ class Bishop : public Piece {
                 return has;
             }
             return validMove;
+       
         };
 };
