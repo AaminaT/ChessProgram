@@ -175,4 +175,19 @@ TEST(RookTests, WhiteRookCaptureDistanceGreaterThan1)
         delete move;	
 }
 
+TEST(RookTests, WhiteRookCaptureWhite)
+{
+	Board* board1 = new Board();
+        Board* board2 = board1->move(coordinate(6, 0), coordinate(4, 0), 1);
+        Board* board3 = board2->move(coordinate(1, 0), coordinate(3, 0), 1);
+
+        Move* move = new Move(coordinate(7, 0), coordinate(4, 0));
+        Rook r;
+
+        EXPECT_EQ(r.isMoveValid(move, board3), false);
+	delete board1;
+	delete board2;
+	delete board3;
+	delete move;
+}
 #endif
