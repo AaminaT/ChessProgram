@@ -12,16 +12,20 @@ private:
     char* board;
     int value;
     int depth;
+    coordinate wk;
+    coordinate bk;
 
 public:
     class piece_info;
     class piece_iterator;
     class path_iterator;
     
-    Board(): board{new char[65]}, value{0}, depth{0} {
-        std::string order = "RNBQKBNRPPPPPPPP";
+    Board(): board{new char[65]}, value{0}, depth{0}, wk{coordinate(0,3)}, bk{coordinate(7,3)} {
+        std::string order = "RNBQQBNRPPPPPPPP";
         for(int i = 0; i < 64; ++i)
             board[i] = (1 < i/8 && i/8 < 6? ' ': (i/16 == 0? order[i]: order[15 - i%16] + 32));
+        board[wk.row*8 + wk.col] = 'K';
+        board[bk.row*8 + bk.col] = 'K';
         board[64] = '\0';
     }
 
@@ -42,7 +46,12 @@ public:
     Board* move(const coordinate& origin, const coordinate& destination, int piece_value) {
         Board* b = new Board(*this);
 
-	b->board[origin.row*8 + origin.col] = ' ';
+        if(at(origin.row, origin.col) == 'K')
+            b->bk = destination;
+        else if(at(origin.row, origin.col) == 'k')
+            b->wk = destination;
+
+	    b->board[origin.row*8 + origin.col] = ' ';
         b->board[destination.row*8 + destination.col] = at(origin.row, origin.col);
         ++b->depth;
         b->value += piece_value*side(origin.row, origin.col);
@@ -59,6 +68,8 @@ public:
 
     // get_turn: returns current turn (0 refers to initial board)
     int get_turn() const { return depth; }
+
+    coordinate get_king(int side) const { return side == 1? wk: bk; }
 
     void print(std::ostream& out) {
         for(int i = 0; i < 64; i++) {    

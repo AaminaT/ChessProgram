@@ -2,7 +2,7 @@
 #define __GAME_HPP__
 
 #include "../Observer/listener.hpp"
-#include "../Observer/msghandler.hpp"
+#include "../Messages/update.hpp"
 #include "board.hpp"
 #include "piece.hpp"
 #include <stack>
@@ -26,8 +26,8 @@ class Game: public Observer, public Listener {
                 // apply move
                 history.push(current);
                 current = current->move(mov->get_origin(), mov->get_destination(), 200);
-                // Message* upd = new UpdateBoard(current);
-                // notifyObservers(upd, nullptr);
+                Message* upd = new UpdateBoard(current);
+                notifyObservers(upd, nullptr);
             }
             else {
                 // notify user of invalid move
@@ -62,8 +62,10 @@ class Game: public Observer, public Listener {
         ~Game() {
             for(auto p: pieces)
                 delete p.second;
-            for(Board* b: history._Get_container())
-                delete b;
+            while(!history.empty()) {
+                delete history.top();
+                history.pop();
+            }
         }
 
         virtual void update(Message* msg, Observer* src) {
