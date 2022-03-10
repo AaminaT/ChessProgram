@@ -8,32 +8,17 @@ bool King::isMoveValid(Move* move, Board* board)
 
 	coordinate dir = move->get_direction();
 	
-	// base case: king should only be able to make 1 distance moves
-	if (move->get_distance() > 1)
+	// if move distance is NOT 1 or move direction is not valid
+	if (!(move->get_distance() == 1) ||  !(are_dependent(coordinate(1, 0), dir) || are_dependent(coordinate(0, 1), dir) ||
+		are_dependent(coordinate(1, 1), dir) || are_dependent(coordinate(-1, 1), dir)))
 	{
-		return false;
-	}
-
-	// clear path check for vertical/horizontal/diagonal paths
-	// * only need to check for one coordinate direction (->) since paths expand in both directions (<->)
-	if (are_equivalent(coordinate(1, 0), dir) || are_equivalent(coordinate(0, 1), dir) ||
-		are_equivalent(coordinate(1, 1), dir) || are_equivalent(coordinate(-1, 1), dir))
-	{
-		Board::path_iterator it = board->path_begin(*move);
-		while (it != board->path_end()) {
-			++it;
-			if ((*it).hasPiece())
-				return false;
-		}
-	}
-	else {
 		return false;
 	}
 
 	coordinate orig = move->get_origin();
 	coordinate dest = move->get_destination();
 
-	// if path is clear, check if there is a piece on landing coordinate
+	// if distance is 1 and path is clear, check if there is a piece on landing coordinate
 	if (board->at(dest).piece() != ' ') {
 		// if there is a piece on landing coordinate, check if it's capturable
 		if (board->at(orig).side() == board->at(dest).side()) {
