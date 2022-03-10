@@ -3,10 +3,17 @@
 
 #include "../Observer/listener.hpp"
 #include "../Messages/update.hpp"
+#include "../Messages/InvalidMove.hpp"
 #include "board.hpp"
 #include "piece.hpp"
 #include <stack>
 #include <unordered_map>
+#include "pawn.hpp"
+#include "king.cpp"
+#include "queen.cpp"
+#include "rook.cpp"
+#include "bishop.hpp"
+#include "knight.hpp"
 
 class Game: public Observer, public Listener {
     private:
@@ -19,8 +26,8 @@ class Game: public Observer, public Listener {
             auto ptm = current->at(mov->get_origin());
             Piece* ruleset = nullptr;
 
-            if(ptm.hasPiece()) 
-                ruleset = pieces.at(ptm.piece());
+            if(ptm.hasPiece())
+                ruleset = pieces.at(ptm.piece() + (ptm.isWhite()? 0: 32));
 
             if(ruleset != nullptr && (current->get_turn()%2 == 0) == ptm.isWhite() && ruleset->isMoveValid(mov, current)) {
                 // apply move
@@ -31,8 +38,8 @@ class Game: public Observer, public Listener {
             }
             else {
                 // notify user of invalid move
-                // Message* inv = new InvalidMove(*mov);
-                // src->update(inv, nullptr);
+                Message* inv = new InvalidMove(mov);
+                src->update(inv, nullptr);
             }
         }
 
@@ -54,9 +61,15 @@ class Game: public Observer, public Listener {
         }*/
 
     public:
-	    Game(Observer* player1, Observer* player2): Observer(), Listener() {
+	Game(Observer* player1, Observer* player2): Observer(), Listener(), current{new Board()} {
             this->addObserver(player1);
             this->addObserver(player2);
+		pieces.emplace('p', new Pawn());
+		pieces.emplace('k', new King());
+		pieces.emplace('q', new Queen());
+		pieces.emplace('r', new Rook());
+		pieces.emplace('b', new Bishop());
+		pieces.emplace('n', new Knight());
         }
         
         ~Game() {
@@ -68,6 +81,10 @@ class Game: public Observer, public Listener {
             }
         }
 
+        void start() {
+            notifyObservers(new UpdateBoard(current), nullptr);
+        }
+
         virtual void update(Message* msg, Observer* src) {
             switch(msg->m_type()) {
                 case 'm':
@@ -77,10 +94,13 @@ class Game: public Observer, public Listener {
                     handle_undo();
                     break;
                 case 'p':
+                    std::cout << "dont care + didnt ask + L + ratio" << std::endl;
                     break;
                 default:
                     break;
             }
+
+            delete msg;
         }
 
         virtual void notifyObservers(Message* msg, Observer* src) {

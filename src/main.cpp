@@ -1,9 +1,10 @@
 #include <iostream>
 #include "Model/game.hpp"
 #include "Model/board.hpp"
+#include "View/board_ui.hpp"
 
 int main(int argc, char* argv[]) {
-    // USING PRINT METHOD IN BOARD
+    /*// USING PRINT METHOD IN BOARD
     std::cout << "board: " << std::endl;
     Board board = Board();
     board.print(std::cout);
@@ -32,7 +33,16 @@ int main(int argc, char* argv[]) {
     }
     catch(std::exception& e){
         std::cout << e.what() << std::endl;
-    }
+    }*/
+
+    BoardUI* UI = new BoardUI();
+    Game* game = new Game(UI, UI);
+    UI->addObserver(game);
+
+    game->start();
+
+    delete game;
+    delete UI;
 
     return 0;
 }

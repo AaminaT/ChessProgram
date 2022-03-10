@@ -6,7 +6,7 @@
 class Queen : public Piece
 {
 public:
-	bool isMoveValid(Move*, Board*);
+	virtual bool isMoveValid(Move*, Board*);
 	int getValue() const { return value; }
 	/*
  	* Implemented in move.hpp
