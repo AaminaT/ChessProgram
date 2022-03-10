@@ -7,6 +7,7 @@ bool Queen::isMoveValid(Move* move, Board* board)
 	bool validMove = true;
 
 	coordinate dir = move->get_direction();
+	coordinate dest = move->get_destination();
 	
 	// clear path check for vertical/horiztal/diagonal paths
 	// * only need to check for one coordinate direction (->) since paths expand in both directions (<->)
@@ -14,10 +15,12 @@ bool Queen::isMoveValid(Move* move, Board* board)
 		are_dependent(coordinate(1, 1), dir) || are_dependent(coordinate(-1, 1), dir))
 	{
 		Board::path_iterator it = board->path_begin(*move);
+		++it;
 		while (it != board->path_end()) {
-			++it;
-			if ((*it).hasPiece())
+			if ((*it).hasPiece() && ((*it).pos() != dest)){
 				return false;
+			}
+			++it;
 		}
 	}
 	else {
@@ -25,7 +28,6 @@ bool Queen::isMoveValid(Move* move, Board* board)
 	}
 
 	coordinate orig = move->get_origin();
-	coordinate dest = move->get_destination();
 
 	// if path is clear, check if there is a piece on landing coordinate
 	if (board->at(dest).piece() != ' ') {
