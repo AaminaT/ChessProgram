@@ -19,6 +19,7 @@ class BoardUI: public Observer, public Listener {
                 case 'i':
                     {
                         std::cout << "The entered move is invalid!" << std::endl;
+                        coordinate orig, dest;
                         inputHandler(orig, dest);
                         notifyObservers(new Move(orig, dest), this);
                     }
