@@ -19,8 +19,8 @@ class Game: public Observer, public Listener {
             auto ptm = current->at(mov->get_origin());
             Piece* ruleset = nullptr;
 
-            if(ptm.hasPiece()) 
-                ruleset = pieces.at(ptm.piece());
+            if(ptm.hasPiece())
+                ruleset = pieces.at(ptm.piece() - (ptm.isWhite()? 0: 32));
 
             if(ruleset != nullptr && (current->get_turn()%2 == 0) == ptm.isWhite() && ruleset->isMoveValid(mov, current)) {
                 // apply move
@@ -54,9 +54,10 @@ class Game: public Observer, public Listener {
         }*/
 
     public:
-	    Game(Observer* player1, Observer* player2): Observer(), Listener() {
+	    Game(Observer* player1, Observer* player2): Observer(), Listener(), current{new Board()} {
             this->addObserver(player1);
             this->addObserver(player2);
+            notifyObservers(new UpdateBoard(current), nullptr);
         }
         
         ~Game() {
@@ -81,6 +82,8 @@ class Game: public Observer, public Listener {
                 default:
                     break;
             }
+
+            delete msg;
         }
 
         virtual void notifyObservers(Message* msg, Observer* src) {
