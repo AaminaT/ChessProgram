@@ -21,7 +21,6 @@ class BoardUI: public Observer, public Listener {
                 case 'b':
                     UpdateBoard* b = dynamic_cast<UpdateBoard*>(msg);
                     b->get_board()->print(std::cout);
-                    std::cout << "Enter a move: " << std::endl;
                     coordinate orig, dest;
                     inputHandler(orig, dest);
                     notifyObservers(new Move(orig, dest), this);
