@@ -6,14 +6,13 @@
 
 class EndGame: public Message
 {
-    private:
     public:
         virtual std::string info()
         {
             return "Game Finished";
         }
-	      virtual char m_type()
-	      {
+	virtual char m_type()
+	{
             return 'e';
         }
 }
