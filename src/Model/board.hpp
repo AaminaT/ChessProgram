@@ -20,12 +20,10 @@ public:
     class piece_iterator;
     class path_iterator;
     
-    Board(): board{new char[65]}, value{0}, depth{0}, wk{coordinate(0,3)}, bk{coordinate(7,3)} {
-        std::string order = "RNBQQBNRPPPPPPPP";
+    Board(): board{new char[65]}, value{0}, depth{0}, wk{coordinate(0,4)}, bk{coordinate(7,3)} {
+        std::string order = "RNBQKBNRPPPPPPPP";
         for(int i = 0; i < 64; ++i)
             board[i] = (1 < i/8 && i/8 < 6? ' ': (i/16 == 0? order[i]: order[15 - i%16] + 32));
-        board[wk.row*8 + wk.col] = 'K';
-        board[bk.row*8 + bk.col] = 'K';
         board[64] = '\0';
     }
 
