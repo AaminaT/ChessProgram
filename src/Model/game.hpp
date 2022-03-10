@@ -79,6 +79,7 @@ class Game: public Observer, public Listener {
                 case 'p':
                     break;
                 default:
+                    break;
             }
         }
 
