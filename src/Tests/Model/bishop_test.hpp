@@ -29,3 +29,29 @@ TEST(BishopTests,WhiteMoveMid2) {
         delete b;
         delete m1;
 }
+
+TEST(BishopTests, WhiteBishopCapture){
+	Board* board1 = Board().move(coordinate(1, 3), coordinate(3, 1), 1);
+	Board* board3 = board1->move(coordinate(2, 4), coordinate(5, 1), 1);
+
+	Move* move = new Move(coordinate(2, 4), coordinate(6, 0));
+	Bishop b;
+
+	EXPECT_EQ(b.isMoveValid(move, board3), true);
+	delete board1;
+	delete board3;
+	delete move;
+}
+
+TEST(BishopTests, WhiteBishopCaptureFriendlyPiece){
+        Board* board1 =  Board().move(coordinate(1, 3), coordinate(3, 1), 1);
+        Board* board2 = board2->move(coordinate(2, 4), coordinate(5, 1), 1);
+
+        Move* move = new Move(coordinate(5, 7), coordinate(4, 6));
+        Bishop b;
+
+        EXPECT_EQ(b.isMoveValid(move, board2), false);
+        delete board1;
+        delete board2;
+        delete move;
+}
