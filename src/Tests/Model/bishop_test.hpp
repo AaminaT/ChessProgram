@@ -44,8 +44,8 @@ TEST(BishopTests, WhiteBishopCapture){
 }
 
 TEST(BishopTests, WhiteBishopCaptureFriendlyPiece){
-        Board* board1 =  Board().move(coordinate(1, 3), coordinate(3, 1), 1);
-        Board* board2 = board2->move(coordinate(2, 4), coordinate(5, 1), 1);
+        Board* board1 =  Board().move(coordinate(5, 5), coordinate(1, 3), 1);
+        Board* board2 = board1->move(coordinate(5, 5), coordinate(7, 5), 1);
 
         Move* move = new Move(coordinate(5, 7), coordinate(4, 6));
         Bishop b;
