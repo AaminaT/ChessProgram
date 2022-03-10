@@ -11,39 +11,55 @@ class BoardUI: public Observer, public Listener {
         void inputHandler(coordinate& orig, coordinate& dest) {
 		std::cout << "Enter your piece's row: ";
 	    	std::cin  >> orig.row;
+                std::cin.ignore(200, '\n');
 		std::cout << std::endl;
 		while(orig.row < 0 || orig.row > 7)
 		{
 			std::cout << "Invalid row, please try again: ";
 			std::cin >> orig.row;
-			std::cout << std::endl;
+                        std::cin.ignore(200, '\n');
+		
+	                std::cout << std::endl;
 		}
 
 		std::cout << "Enter your piece's col: ";
+                std::cin >> orig.col;
+std::cin.ignore(200, '\n');
+
 		while(orig.col < 0 || orig.col > 7)
 		{
 			std::cout << "Invalid col, please try again: ";
 			std::cin >> orig.col;
+std::cin.ignore(200, '\n');
+
 			std::cout << std::endl;
 		}
 
 		std::cout << "Enter your destination row: ";
 		std::cin >> dest.row;
+std::cin.ignore(200, '\n');
+
 		std::cout << std::endl;
 		while(dest.row < 0 || dest.row > 7)
 		{
 			std::cout << "Invalid row, please try again: ";
 			std::cin >> dest.row;
+std::cin.ignore(200, '\n');
+
 			std::cout << std::endl;
 		}
 
 		std::cout << "Enter your destination col: ";
 		std::cin >> dest.col;
+std::cin.ignore(200, '\n');
+
 		std::cout << std::endl;
 		while(dest.col < 0 || dest.col > 7)
 		{
 			std::cout << "Invalid col, please try again: ";
 			std::cin >> dest.col;
+std::cin.ignore(200, '\n');
+
 			std::cout << std::endl;
 		}
         }

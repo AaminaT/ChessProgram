@@ -28,6 +28,8 @@ class Move: public Message {
 
             direction.row /= abs_row;
             direction.col /= abs_row;   
+
+            std::cout << info() << std::endl;
         }
 
         void set_origin(const coordinate& c) {
