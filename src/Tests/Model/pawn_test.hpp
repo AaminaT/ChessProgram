@@ -135,23 +135,77 @@ TEST(PawnTests,BlackMove2WrongDirection) {
         delete m2;
 }
 
-/*
-TEST(PawnTests,CaptureWithPawn) {
+
+TEST(PawnTests,CaptureBRight) {
 	// move diagonal
-        Board* b1 = Board().move(coordinate(1,6), coordinate(1,7) , 9);
-	Board* b2 = b1->move(coordinate(2,6), coordinate(2,7) , 16);
-	Move* m1 = new Move(coordinate(6,1), coordinate(4,1));
-        Move* m2 = new Move(coordinate(1,2), coordinate(3,2));
-	Move* m3 = m2->Move(coordinate(4,1), coordinate(3,2));
+	Board* b1 = new Board();
+	Board* b2 = Board().move(coordinate(6,1), coordinate(4,1) , 1);
+	Board* b3 = b2->move(coordinate(1,2), coordinate(3,2) , 1);
+	Move* m = new Move(coordinate(4,1), coordinate(3,2));
 	
         Pawn test_piece;
 	
-        EXPECT_EQ(test_piece.isMoveValid(m3,b2),true);
+        EXPECT_EQ(test_piece.isMoveValid(m,b3),true);
 	delete b1;
         delete b2;
-        delete m1;
-        delete m2;
-	delete m3;
+        delete b3;
+	delete m;
 }
-*/
+
+TEST(PawnTests,CaptureBLeft) {
+        // move diagonal
+	Board* b1 = new Board();
+        Board* b2 = Board().move(coordinate(6,3), coordinate(4,3) , 1);
+        Board* b3 = b2->move(coordinate(1,2), coordinate(3,2) , 1);
+        Move* m = new Move(coordinate(4,3), coordinate(3,2));
+
+        Pawn test_piece;
+
+        EXPECT_EQ(test_piece.isMoveValid(m,b3),true);
+        delete b1;
+        delete b2;
+        delete b3;
+        delete m;
+}
+
+TEST(PawnTests,CaptureWRight) {
+        // move diagonal
+        Board* b1 = new Board();
+        Board* b2 = Board().move(coordinate(6,3), coordinate(4,3) , 1);
+        Board* b3 = b2->move(coordinate(1,2), coordinate(3,2) , 1);
+	
+        Board* b4 = b3->move(coordinate(5,5), coordinate(4,5) , 1);
+	
+	Move* m = new Move(coordinate(3,2), coordinate(4,3));
+        
+        Pawn test_piece;
+        
+        EXPECT_EQ(test_piece.isMoveValid(m,b4),true);
+        delete b1;
+        delete b2;
+        delete b3;
+	delete b4;
+        delete m;
+}
+
+TEST(PawnTests,CaptureWLeft) {
+        // move diagonal
+        Board* b1 = new Board();
+        Board* b2 = Board().move(coordinate(6,3), coordinate(4,3) , 1);
+        Board* b3 = b2->move(coordinate(1,4), coordinate(3,4) , 1);
+        
+        Board* b4 = b3->move(coordinate(5,5), coordinate(4,5) , 1);
+        
+	Move* m = new Move(coordinate(3,4), coordinate(4,3));
+        
+        Pawn test_piece;
+	
+	EXPECT_EQ(test_piece.isMoveValid(m,b4),true);
+        delete b1;
+        delete b2;
+        delete b3;
+        delete b4;
+        delete m;
+}
+
 #endif

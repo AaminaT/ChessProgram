@@ -21,6 +21,13 @@ class Pawn : public Piece {
 			
 			int p = number_turn%2 == 0? -1: 1;
 			
+			
+			//check both diagonal movements, can only be true if distance = 1 and opposite color piece at destination
+			if(distance == 1 && are_equivalent(coordinate(1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
+				return true;
+			if(distance == 1 && are_equivalent(coordinate(1,-1) * p, direction) && targeted_piece.side() != moving_piece.side())
+				return true;
+			
 			//pawn cannot move more than 2 spaces and specific color in specific direction
 			if(distance < 3 && are_equivalent(coordinate(1,0) * p, direction))
 			{
@@ -54,10 +61,10 @@ class Pawn : public Piece {
 				}
 			}
 			//check both diagonal movements, can only be true if distance = 1 and opposite color piece at destination
-			if(distance == 1 && are_equivalent(coordinate(1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
-    				return true;
-			if(distance == 1 && are_equivalent(coordinate(-1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
-				return true;	
+			//if(distance == 1 && are_equivalent(coordinate(1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
+                        //        return true;
+                        //if(distance == 1 && are_equivalent(coordinate(-1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
+                        //        return true;	
 			return validMove;
 		};
 };
