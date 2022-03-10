@@ -6,6 +6,12 @@
 #include "piece.hpp"
 #include <stack>
 #include <unordered_map>
+#include "pawn.hpp"
+#include "king.hpp"
+#include "queen.hpp"
+#include "rook.hpp"
+#include "bishop.hpp"
+#include "knight.hpp"
 
 class Game: public Observer, public Listener {
     private:
