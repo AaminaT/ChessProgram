@@ -3,6 +3,7 @@
 #include "Messages/move_tests.hpp"
 #include "Model/coordinate_tests.hpp"
 #include "Model/board_tests.hpp"
+#include "Model/king_tests.hpp"
 #include "Model/bishop_test.hpp"
 #include "Model/knight_test.hpp"
 #include "Model/queen_tests.hpp"
