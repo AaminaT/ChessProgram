@@ -176,12 +176,6 @@ public:
                 return temp;
             }
 
-	    path_iterator operator--() {
-		if (current != coordinate())
-			current = (current == end) ? coordinate() : current - dir;
-		return *this;
-	    }
-
             piece_info operator*() {
                 if(current.row < 0 || current.row > 7 || current.col < 0 || current.col > 7)
                     throw std::out_of_range("iterator out of bounds!");
