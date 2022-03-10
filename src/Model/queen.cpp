@@ -29,7 +29,7 @@ bool Queen::isMoveValid(Move* move, Board* board)
 
 	coordinate orig = move->get_origin();
 
-	// if path is clear, check if there is a piece on landing coordinate
+	// if distance is 1 and path is clear, check if there is a piece on landing coordinate
 	if (board->at(dest).piece() != ' ') {
 		// if there is a piece on landing coordinate, check if it's capturable
 		if (board->at(orig).side() == board->at(dest).side()) {

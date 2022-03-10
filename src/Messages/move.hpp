@@ -60,6 +60,10 @@ class Move: public Message {
                << ") to (" << destination.row << ", " << destination.col << ")." << std::endl;
             return ss.str();
         }
+
+        virtual char m_type() {
+            return 'm';
+        }
 };
 
 #endif

@@ -2,8 +2,8 @@
 #define __PIECE_HPP__
 
 class Piece {
-	public:
-		virtual bool isMoveValid(Move*,Board*) = 0;
+    public:
+        virtual bool isMoveValid(Move*, Board*) = 0;
 };
 
 #endif
