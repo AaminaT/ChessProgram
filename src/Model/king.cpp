@@ -7,6 +7,12 @@ bool King::isMoveValid(Move* move, Board* board)
 	bool validMove = true;
 
 	coordinate dir = move->get_direction();
+	
+	// base case: king should only be able to make 1 distance moves
+	if (move->get_distance() > 1)
+	{
+		return false;
+	}
 
 	// clear path check for vertical/horizontal/diagonal paths
 	// * only need to check for one coordinate direction (->) since paths expand in both directions (<->)
