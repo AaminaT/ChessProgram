@@ -7,6 +7,12 @@
 #include "piece.hpp"
 #include <stack>
 #include <unordered_map>
+#include "pawn.hpp"
+#include "king.cpp"
+#include "queen.cpp"
+#include "rook.cpp"
+#include "bishop.hpp"
+#include "knight.hpp"
 
 class Game: public Observer, public Listener {
     private:
@@ -57,6 +63,12 @@ class Game: public Observer, public Listener {
 	    Game(Observer* player1, Observer* player2): Observer(), Listener(), current{new Board()} {
             this->addObserver(player1);
             this->addObserver(player2);
+		pieces.emplace('p', new Pawn());
+		pieces.emplace('k', new King());
+		pieces.emplace('q', new Queen());
+		pieces.emplace('r', new Rook());
+		pieces.emplace('b', new Bishop());
+		pieces.emplace('n', new Knight());
         }
         
         ~Game() {

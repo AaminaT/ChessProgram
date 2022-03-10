@@ -6,6 +6,7 @@
 
 class Piece {
     public:
+	virtual ~Piece() {}
         virtual bool isMoveValid(Move*, Board*) = 0;
 };
 

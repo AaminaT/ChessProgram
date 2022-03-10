@@ -4,7 +4,7 @@ using namespace std;
 
 class Pawn : public Piece {
 	public:
-		bool isMoveValid(Move* move,Board* board)
+		virtual bool isMoveValid(Move* move,Board* board)
 		{
 			bool validMove = false;
 			
