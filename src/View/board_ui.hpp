@@ -17,13 +17,21 @@ class BoardUI: public Observer, public Listener {
         virtual void update(Message* msg, Observer* src) {
             switch(msg->m_type()) {
                 case 'i':
-                    std::cout << "The entered move is invalid!" << std::endl;
+                    {
+                        std::cout << "The entered move is invalid!" << std::endl;
+                        inputHandler(orig, dest);
+                        notifyObservers(new Move(orig, dest), this);
+                    }
+                    break;
                 case 'b':
-                    UpdateBoard* b = dynamic_cast<UpdateBoard*>(msg);
-                    b->get_board()->print(std::cout);
-                    coordinate orig, dest;
-                    inputHandler(orig, dest);
-                    notifyObservers(new Move(orig, dest), this);
+                    {
+                        UpdateBoard* b = dynamic_cast<UpdateBoard*>(msg);
+                        b->get_board()->print(std::cout);
+                        coordinate orig, dest;
+                        inputHandler(orig, dest);
+                        notifyObservers(new Move(orig, dest), this);
+                        
+                    }
                     break;
                 case 'e':
                     std::cout << "Game Over!!" << std::endl;
