@@ -1,9 +1,9 @@
-#ifndef __KING_HPP__
-#define __KING_HPP__
+#ifndef __QUEEN_HPP__
+#define __QUEEN_HPP__
 
 #include "piece.hpp"
 
-class King : public Piece
+class Queen : public Piece
 {
 public:
 	bool isMoveValid(Move*, Board*);
@@ -13,7 +13,7 @@ public:
  	* std::list<coordinate> getDirections(Board*);
  	*/
 private:
-	int value = 0; // king is not a capturable piece and has no value
+	int value = 9;
 };
 
 #endif
