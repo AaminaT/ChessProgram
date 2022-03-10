@@ -31,6 +31,10 @@ TEST(BoardTests, MoveTest) {
     EXPECT_EQ(ss.str(), out2);
     EXPECT_EQ(b2->get_value(), 198);
     EXPECT_EQ(b3->get_value(), -97);
+
+    delete b1;
+    delete b2;
+    delete b3;
 }
 
 TEST(BoardTests, PieceIteratorTest) {
@@ -57,6 +61,7 @@ TEST(BoardTests, PieceIteratorTest) {
         i++;
     }
     EXPECT_NE(i, 32);
+    delete b;
 }
 
 TEST(BoardTests, PathIteratorTest) {
@@ -94,6 +99,8 @@ TEST(BoardTests, PathIteratorTest) {
 
     EXPECT_ANY_THROW(b->path_begin(coordinate(0,0), coordinate(7,1), coordinate(1,0)));
     EXPECT_ANY_THROW(b->path_begin(coordinate(1,0), coordinate(8,0), coordinate(1,0)));
+
+    delete b;
 }
 
 #endif

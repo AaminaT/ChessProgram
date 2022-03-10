@@ -32,6 +32,7 @@ TEST(KnightTests,WhiteMoveMidInvalid) {
 
 TEST(KnightTests, WhiteKnightCapture){
         Board* board1 = Board().move(coordinate(1, 3), coordinate(3, 1), 1);
+
         Board* board3 = board1->move(coordinate(4, 3), coordinate(5, 1), 1);
 
         Move* move = new Move(coordinate(4, 3), coordinate(5, 1));
@@ -45,7 +46,7 @@ TEST(KnightTests, WhiteKnightCapture){
 
 TEST(KnightTests, WhiteKnightCaptureFriendlyPiece){
         Board* board1 =  Board().move(coordinate(1, 3), coordinate(3, 1), 1);
-        Board* board2 = board2->move(coordinate(6, 7), coordinate(4, 6), 1);
+        Board* board2 = board1->move(coordinate(6, 7), coordinate(4, 6), 1);
 
         Move* move = new Move(coordinate(6, 7), coordinate(4, 6));
         Knight k;
