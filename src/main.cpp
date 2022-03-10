@@ -39,6 +39,8 @@ int main(int argc, char* argv[]) {
     Game* game = new Game(UI, UI);
     UI->addObserver(game);
 
+    game->start();
+
     delete game;
     delete UI;
 

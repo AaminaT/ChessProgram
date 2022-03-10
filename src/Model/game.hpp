@@ -57,7 +57,6 @@ class Game: public Observer, public Listener {
 	    Game(Observer* player1, Observer* player2): Observer(), Listener(), current{new Board()} {
             this->addObserver(player1);
             this->addObserver(player2);
-            notifyObservers(new UpdateBoard(current), nullptr);
         }
         
         ~Game() {
@@ -67,6 +66,10 @@ class Game: public Observer, public Listener {
                 delete history.top();
                 history.pop();
             }
+        }
+
+        void start() {
+            notifyObservers(new UpdateBoard(current), nullptr);
         }
 
         virtual void update(Message* msg, Observer* src) {
