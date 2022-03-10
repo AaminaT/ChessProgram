@@ -8,35 +8,14 @@
 #include <stack>
 #include <unordered_map>
 
-class Game: public Observer, public Listener, public MsgHandler {
+class Game: public Observer, public Listener {
     private:
 	    int id;
         Board* current;
         std::stack<Board*> history;
         std::unordered_map<char, Piece*> pieces;
 
-    public:
-	Game(Observer* player1, Observer* player2): Observer(), Listener(), MsgHandler() {
-            this->addObserver(player1);
-            this->addObserver(player2);
-        }
-        
-        ~Game() {
-            for(auto p: pieces)
-                delete p.second;
-            for(Board* b: history._Get_container())
-                delete b;
-        }
-
-        virtual void update(Message* msg, Observer* src) {
-            msg->accept(this, src);
-        }
-
-        virtual void notifyObservers(Message* msg, Observer* src) {
-            observers->at(current->get_turn()%2)->update(msg, src);
-        }
-
-        virtual void handle(Move* mov, Observer* src) {
+        void handle_move(Move* mov, Observer* src) {
             auto ptm = current->at(mov->get_origin());
             Piece* ruleset = nullptr;
 
@@ -57,11 +36,55 @@ class Game: public Observer, public Listener, public MsgHandler {
             }
         }
 
-        /*virtual void handle(UndoMove* und, Observer* src) = 0;
-        virtual void handle(UpdateBoard* upd, Observer* src) = 0;
-        virtual void handle(Promotion* pro, Observer* src) = 0;
-        virtual void handle(InvalidMove* inv, Observer* src) = 0;
-        virtual void handle(EndGame* end, Observer* src)*/
+        void handle_undo() {
+            if(current->get_turn() == 0) {
+                // notify user of invalid move
+                // Message* inv = new InvalidMove(*mov);
+                // src->update(inv, nullptr);
+            }
+            else {
+                delete current;
+                current = history.top();
+                history.pop();
+            }
+        }
+
+        /*virtual void handle(Promotion* pro, Observer* src) {
+
+        }*/
+
+    public:
+	    Game(Observer* player1, Observer* player2): Observer(), Listener() {
+            this->addObserver(player1);
+            this->addObserver(player2);
+        }
+        
+        ~Game() {
+            for(auto p: pieces)
+                delete p.second;
+            for(Board* b: history._Get_container())
+                delete b;
+        }
+
+        virtual void update(Message* msg, Observer* src) {
+            switch(msg->m_type()) {
+                case 'm':
+                    handle_move(dynamic_cast<Move*>(msg), src);
+                    break;
+                case 'u':
+                    handle_undo();
+                    break;
+                case 'p':
+                    break;
+                default:
+            }
+        }
+
+        virtual void notifyObservers(Message* msg, Observer* src) {
+            observers->at(current->get_turn()%2)->update(msg, src);
+        }
+
+        
 };
 
 #endif //__GAME_HPP__

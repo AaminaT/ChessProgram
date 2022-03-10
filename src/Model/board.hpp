@@ -177,7 +177,7 @@ public:
             }
 
             piece_info operator*() {
-                if(current.row < 0 || current.row > 7 || current.col < 0 || current.col > 7)
+                if(current.row < 0 || current.row > 7 || current.col < 0 || current.col > 7 || current == coordinate())
                     throw std::out_of_range("iterator out of bounds!");
                 
                 return board->at(current);

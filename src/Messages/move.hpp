@@ -61,9 +61,8 @@ class Move: public Message {
             return ss.str();
         }
 
-        virtual void accept(MsgHandler* h, Observer* src) {
-            Move* _this = this;
-            h->handle(_this, src);
+        virtual char m_type() {
+            return 'm';
         }
 };
 

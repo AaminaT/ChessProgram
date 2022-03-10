@@ -9,7 +9,7 @@ class Message {
     public:
         virtual ~Message() {}
         virtual std::string info() = 0;
-        virtual void accept(MsgHandler*, Observer*) = 0;
+        virtual char m_type() = 0;
 };
 
 #endif //__MESSAGE_HPP__
