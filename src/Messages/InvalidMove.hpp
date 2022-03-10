@@ -1,5 +1,5 @@
-#ifndef __MOVE_HPP__
-#define __MOVE_HPP__
+#ifndef __INVALID_MOVE_HPP__
+#define __INVALID_MOVE_HPP__
 
 #include "message.hpp"
 #include "../Model/coordinate.hpp"
@@ -7,26 +7,25 @@
 
 class InvalidMove: public Message {
     private:
-	Message* inv = new InvalidMove(*mov);
-	Move* m;
+		Move* m;
     public:
-	InvalidMove(Move* move)
-	{
-		m = move;
-	}
+		InvalidMove(Move* move)
+		{
+			m = move;
+		}
 
-	Move* get_move()
-	{
-		return m;
-	}
+		Move* get_move()
+		{
+			return m;
+		}
 
-	virtual std::string info() {
-            return "Invalid Move";
-        }
+		virtual std::string info() {
+				return "Invalid Move";
+		}
 
-	virtual char m_type()
-	{
-            return 'i';
+		virtual char m_type()
+		{
+				return 'i';
         }
 };
 
