@@ -248,7 +248,7 @@ TEST(PawnTests,BCaptureBLeft) {
         delete b3;
         delete b4;
         delete b5;
-	delete b6;
+        delete b6;
         delete m;
 }
 

@@ -59,12 +59,7 @@ class Pawn : public Piece {
 						has = false;
 					return has;
 				}
-			}
-			//check both diagonal movements, can only be true if distance = 1 and opposite color piece at destination
-			//if(distance == 1 && are_equivalent(coordinate(1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
-                        //        return true;
-                        //if(distance == 1 && are_equivalent(coordinate(-1,1) * p, direction) && targeted_piece.side() != moving_piece.side())
-                        //        return true;	
+			}	
 			return validMove;
 		};
 };
