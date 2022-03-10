@@ -3,6 +3,7 @@
 
 #include "message.hpp"
 #include "../Model/coordinate.hpp"
+#include "move.hpp"
 
 class InvalidMove: public Message {
     private:
@@ -13,14 +14,20 @@ class InvalidMove: public Message {
 	{
 		m = move;
 	}
+
 	Move* get_move()
 	{
 		return m;
 	}
+
 	virtual std::string info() {
             return "Invalid Move";
         }
+
 	virtual char m_type()
 	{
             return 'i';
         }
+};
+
+#endif

@@ -3,6 +3,7 @@
 
 #include "../Observer/listener.hpp"
 #include "../Messages/update.hpp"
+#include "../Messages/InvalidMove.hpp"
 #include "board.hpp"
 #include "piece.hpp"
 #include <stack>
@@ -26,7 +27,7 @@ class Game: public Observer, public Listener {
             Piece* ruleset = nullptr;
 
             if(ptm.hasPiece())
-                ruleset = pieces.at(ptm.piece() - (ptm.isWhite()? 0: 32));
+                ruleset = pieces.at(ptm.piece() + (ptm.isWhite()? 0: 32));
 
             if(ruleset != nullptr && (current->get_turn()%2 == 0) == ptm.isWhite() && ruleset->isMoveValid(mov, current)) {
                 // apply move
@@ -37,8 +38,8 @@ class Game: public Observer, public Listener {
             }
             else {
                 // notify user of invalid move
-                // Message* inv = new InvalidMove(*mov);
-                // src->update(inv, nullptr);
+                Message* inv = new InvalidMove(mov);
+                src->update(inv, nullptr);
             }
         }
 
@@ -60,7 +61,7 @@ class Game: public Observer, public Listener {
         }*/
 
     public:
-	    Game(Observer* player1, Observer* player2): Observer(), Listener(), current{new Board()} {
+	Game(Observer* player1, Observer* player2): Observer(), Listener(), current{new Board()} {
             this->addObserver(player1);
             this->addObserver(player2);
 		pieces.emplace('p', new Pawn());
