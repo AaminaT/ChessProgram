@@ -78,6 +78,7 @@ class Game: public Observer, public Listener {
                     handle_undo();
                     break;
                 case 'p':
+                    std::cout << "dont care + didnt ask + L + ratio" << std::endl;
                     break;
                 default:
                     break;

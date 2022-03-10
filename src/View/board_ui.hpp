@@ -20,15 +20,14 @@ class BoardUI: public Observer, public Listener {
                     std::cout << "The entered move is invalid!" << std::endl;
                 case 'b':
                     UpdateBoard* b = dynamic_cast<UpdateBoard*>(msg);
-                    // print updated board
+                    b->get_board()->print(std::cout);
                     std::cout << "Enter a move: " << std::endl;
-                    // request/verify input
-                    
-                    inputHandler
-                    notifyObservers(new Move(), this);
+                    coordinate orig, dest;
+                    inputHandler(orig, dest);
+                    notifyObservers(new Move(orig, dest), this);
                     break;
                 case 'e':
-                    std::cout << "The entered move is invalid!" << std::endl;
+                    std::cout << "Game Over!!" << std::endl;
                     break;
                 default:
                     break;
